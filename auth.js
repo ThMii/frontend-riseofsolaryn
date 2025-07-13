@@ -8,7 +8,7 @@ const showRegister = document.getElementById('show-register');
 const showLogin = document.getElementById('show-login');
 
 // API Configuration
-const API_BASE_URL = 'http://localhost:5226/api';
+const API_BASE_URL = 'https://rise-api-solarryn-cchvathwafa5e6gn.southeastasia-01.azurewebsites.net/api';
 
 // Hiển thị loading
 function showLoading(show) {

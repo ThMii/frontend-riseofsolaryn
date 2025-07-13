@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiseOfSolarryn</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <meta name="google-signin-client_id" content="209103974377-7nveqvs3viq5bjaa8j9vbg4uarqpgir2.apps.googleusercontent.com">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <img src="Hình/t1.png" alt="Game Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="#">Games</a></li>
+                    <li><a href="#">Ranks</a></li>
+                    <li><a href="#">Nạp tiền</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="login-button">Đăng Nhập</button>
+                <button class="logout-button" style="display: none;">Đăng Xuất</button>
+                <div class="user-info" style="display: none;">
+                    <img src="" class="user-avatar" alt="User Avatar">
+                    <span class="user-name"></span>
+                </div>
+                <div class="g_id_signin" style="display: none;"></div>
+            </div>
+                <div id="g_id_onload"
+                    data-client_id="209103974377-7nveqvs3viq5bjaa8j9vbg4uarqpgir2.apps.googleusercontent.com"
+                    data-context="signin" 
+                    data-ux_mode="popup" 
+                    data-callback="handleGoogleSignIn"
+                    data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin" 
+                    data-type="standard" 
+                    data-shape="rectangular" 
+                    data-theme="dark"
+                    data-text="signin_with" 
+                    data-size="large" 
+                    data-logo_alignment="left" 
+                    style="display: none;">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Loading Indicator -->
+    <div id="loading" style="display:none;">
+        <div class="spinner"></div>
+        <span>Đang xử lý...</span>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="interactive-banner">
+        <div class="main-banner">
+            <img src="Hình/Test.png" alt="Banner" class="banner-image active" id="banner1">
+            <img src="Hình/Test2.png" alt="Banner" class="banner-image" id="banner2">
+            <img src="Hình/Test.png" alt="Banner" class="banner-image" id="banner3">
+            <img src="Hình/Test2.png" alt="Banner" class="banner-image" id="banner4">
+
+            <div class="info-panel">
+                <h2>Tham gia ngay</h2>
+                <p>Rise of Solarryn<br>Game hay vì luôn</p>
+                <div class="action-buttons">
+                    <a href="#" class="action-button primary-button">Play now</a>
+                </div>
+            </div>
+
+            <div class="thumbnail-nav">
+                <div class="thumbnail active" data-target="banner1">
+                    <img src="Hình/Test.png" alt="Banner 1">
+                </div>
+                <div class="thumbnail" data-target="banner2">
+                    <img src="Hình/Test2.png" alt="Banner 2">
+                </div>
+                <div class="thumbnail" data-target="banner3">
+                    <img src="Hình/Test.png" alt="Banner 3">
+                </div>
+                <div class="thumbnail" data-target="banner4">
+                    <img src="Hình/Test2.png" alt="Banner 4">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Introduction Section -->
+    <section class="ros-section">
+        <img src="Hình/Test.png" alt="Background Pattern" class="ros-bg-pattern">
+        <div class="ros-container">
+            <div class="ros-content">
+                <div class="ros-header">
+                    <h1>Chúng tôi là</h1>
+                    <h2>Rise of Solarryn</h2>
+                    <h3>Thách thức mọi giới hạn</h3>
+                </div>
+                <p>
+                    Rise of Solarryn - Cuộc chiến thần thoại. Mang phong cách và trải nghiệm cá nhân tối đa
+                    trong thế giới giả tưởng đầy mê hoặc. Sử dụng kỹ năng phép thuật cùng với lối tư duy
+                    chiến thuật sắc bén, thành bại được định đoạt chỉ trong từng khoảnh khắc.
+                </p>
+                <div class="ros-divider"></div>
+                <a href="#" class="ros-button">Tìm hiểu trò chơi</a>
+            </div>
+            <div class="video-container">
+                <video poster="Hình/Test.png">
+                    <source src="Hình/0324.mp4" type="video/mp4">
+                    Trình duyệt của bạn không hỗ trợ video.
+                </video>
+                <div class="video-overlay">
+                    <div class="play-button"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Maps Section -->
+    <section class="marketplace-hero">
+        <h2 class="marketplace-title">Khám phá bản đồ</h2>
+        <div class="marketplace-grid">
+            <div class="marketplace-item">
+                <img src="Hình/Test.png" alt="Map1" class="marketplace-image">
+                <div class="marketplace-info">
+                    <h3>Bản đồ 1</h3>
+                    <p>Phần này để mô tả.</p>
+                </div>
+            </div>
+            <div class="marketplace-item">
+                <img src="Hình/Test.png" alt="Map2" class="marketplace-image">
+                <div class="marketplace-info">
+                    <h3>Bản đồ 2</h3>
+                    <p>Phần này để mô tả.</p>
+                </div>
+            </div>
+            <div class="marketplace-item">
+                <img src="Hình/Test.png" alt="Map3" class="marketplace-image">
+                <div class="marketplace-info">
+                    <h3>Bản đồ 3</h3>
+                    <p>Phần này để mô tả.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="games">
+        <h2 class="section-title">Tin tức</h2>
+        <div class="games-grid">
+            <div class="game-card">
+                <img src="Hình/Test.png" alt="News" class="game-image">
+                <div class="game-info">
+                    <h3 class="game-title">Mẹo cho người chơi mới</h3>
+                    <p class="game-description">Create, explore and survive in your own blocky world.</p>
+                    <a href="#" class="game-button">Learn more</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <img src="Hình/Test.png" alt="News" class="game-image">
+                <div class="game-info">
+                    <h3 class="game-title">Mẹo đánh boss</h3>
+                    <p class="game-description">Discover an all-new action adventure game.</p>
+                    <a href="#" class="game-button">Learn more</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <img src="Hình/Test.png" alt="News" class="game-image">
+                <div class="game-info">
+                    <h3 class="game-title">Mẹo nâng cao</h3>
+                    <p class="game-description">Nâng cấp kỹ năng và trang bị.</p>
+                    <a href="#" class="game-button">Learn more</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Games</h3>
+                <ul>
+                    <li><a href="#">Rise of Solarryn</a></li>
+                    <li><a href="#">RoS Dungeons</a></li>
+                    <li><a href="#">RoS Legends</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Community</h3>
+                <ul>
+                    <li><a href="#">Forums</a></li>
+                    <li><a href="#">Feedback</a></li>
+                    <li><a href="#">Events</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 6 anh em siêu nhân Studios. Rise of Solarryn.</p>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="login-form">
+                <h3>Đăng Nhập</h3>
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Mật khẩu" required>
+                <button id="login-btn" class="btn-login">Đăng Nhập</button>
+                <p class="switch-form">Chưa có tài khoản? <a href="#" id="show-register">Đăng ký ngay</a></p>
+            </div>
+            <div id="register-form" style="display: none;">
+                <h3>Đăng Ký</h3>
+                <input type="text" id="register-username" placeholder="Họ và tên" required>
+                <input type="email" id="register-email" placeholder="Email" required>
+                <input type="password" id="register-password" placeholder="Mật khẩu" required>
+                <button id="register-btn" class="btn-register">Đăng Ký</button>
+                <p class="switch-form">Đã có tài khoản? <a href="#" id="show-login">Đăng nhập</a></p>
+            </div>
+            <div id="otp-form" style="display: none;">
+                <h3>Xác Thực OTP</h3>
+                <p>Mã OTP đã được gửi đến email của bạn</p>
+                <input type="text" id="otp-code" placeholder="Nhập mã OTP" required>
+                <button id="verify-otp-btn" class="btn-verify">Xác Nhận</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        // Initialize Google Sign-In
+        function initializeGoogleSignIn() {
+            if (typeof google !== 'undefined') {
+                google.accounts.id.initialize({
+                    client_id: '209103974377-7nveqvs3viq5bjaa8j9vbg4uarqpgir2.apps.googleusercontent.com',
+                    callback: handleGoogleSignIn
+                });
+            }
+        }
+
+        // Handle Google Sign-In
+        async function handleGoogleSignIn(response) {
+            showLoading(true);
+            
+            try {
+                const res = await fetch('http://localhost:5226/api/auth/google-login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ idToken: response.credential })
+                });
+
+                const data = await res.json();
+                
+                if (!res.ok) throw new Error(data.message || 'Đăng nhập thất bại');
+                
+                localStorage.setItem('authToken', data.token);
+                localStorage.setItem('userData', JSON.stringify({
+                    userId: data.userId,
+                    email: data.email,
+                    userName: data.userName,
+                    avatarUrl: data.avatarUrl
+                }));
+                
+                updateAuthStatus();
+                window.location.href = 'game.html';
+            } catch (error) {
+                console.error('Google Sign-In Error:', error);
+                alert('Lỗi đăng nhập: ' + error.message);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Update auth status UI
+        function updateAuthStatus() {
+            const token = localStorage.getItem('authToken');
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            
+            const loginBtn = document.querySelector('.login-button');
+            const logoutBtn = document.querySelector('.logout-button');
+            const userInfo = document.querySelector('.user-info');
+            const googleSignIn = document.querySelector('.g_id_signin');
+
+            if (token) {
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                googleSignIn.style.display = 'none';
+                
+                if (userInfo) {
+                    const avatar = userInfo.querySelector('.user-avatar');
+                    const name = userInfo.querySelector('.user-name');
+                    
+                    if (userData.avatarUrl) avatar.src = userData.avatarUrl;
+                    if (userData.userName) name.textContent = userData.userName;
+                    
+                    userInfo.style.display = 'flex';
+                }
+            } else {
+                loginBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+                if (userInfo) userInfo.style.display = 'none';
+                googleSignIn.style.display = 'block';
+            }
+        }
+
+        // Show/hide loading
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'flex' : 'none';
+        }
+
+        // Initialize when DOM loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeGoogleSignIn();
+            updateAuthStatus();
+            
+            // Banner navigation
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const banners = document.querySelectorAll('.banner-image');
+            
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function() {
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    banners.forEach(b => b.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(this.dataset.target).classList.add('active');
+                });
+            });
+            
+            // Video play button
+            const playBtn = document.querySelector('.play-button');
+            const video = document.querySelector('.video-container video');
+            
+            if (playBtn && video) {
+                playBtn.addEventListener('click', () => toggleVideoPlay());
+                video.addEventListener('click', () => toggleVideoPlay());
+                
+                function toggleVideoPlay() {
+                    if (video.paused) {
+                        video.play();
+                        playBtn.style.opacity = '0';
+                    } else {
+                        video.pause();
+                        playBtn.style.opacity = '1';
+                    }
+                }
+            }
+            
+            // Logout button
+            document.querySelector('.logout-button')?.addEventListener('click', () => {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('userData');
+                updateAuthStatus();
+                
+                if (typeof google !== 'undefined') {
+                    google.accounts.id.disableAutoSelect();
+                }
+                
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+    <div id="loading" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center; flex-direction:column;">
+        <div class="spinner"></div>
+        <span style="color:white; margin-top:20px;">Đang xử lý...</span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game - RiseOfSolarryn</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="auth.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="Hình/t1.png" alt="Game Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Game</a></li>
+                    <li><a href="#">Profile</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="logout-button">Đăng Xuất</button>
+                <div class="user-info">
+                    <img src="" class="user-avatar" alt="User Avatar">
+                    <span class="user-name"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="game-container">
+        <h1>Chào mừng đến với RiseOfSolarryn</h1>
+        <div class="game-content">
+            <div class="game-character">
+                <!-- Character selection/content will go here -->
+            </div>
+            <div class="game-controls">
+                <button class="btn-play">Bắt đầu chơi</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Load user data when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('authToken');
+            const userData = JSON.parse(localStorage.getItem('userData') || {});
+            
+            if (!token) {
+                alert('Vui lòng đăng nhập để chơi game');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Display user info
+            const userAvatar = document.querySelector('.user-avatar');
+            const userName = document.querySelector('.user-name');
+            
+            if (userData.avatarUrl) userAvatar.src = userData.avatarUrl;
+            if (userData.userName) userName.textContent = userData.userName;
+
+            // Logout handler
+            document.querySelector('.logout-button').addEventListener('click', () => {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('userData');
+                window.location.href = 'index.html';
+            });
+
+            // Game controls
+            document.querySelector('.btn-play').addEventListener('click', () => {
+                alert('Chức năng game sẽ được triển khai sau!');
+            });
+        });
+    </script>
+</body>
+</html>

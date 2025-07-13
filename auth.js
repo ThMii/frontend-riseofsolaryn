@@ -45,14 +45,13 @@ async function handleGoogleSignIn(response) {
             throw new Error('Không thể kết nối đến server. Vui lòng thử lại sau.');
         }
 
-        const res = await fetch(`${API_BASE_URL}/google-login`, {
+         const res = await fetch(`${API_BASE_URL}/google-login`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
+            mode: 'cors', // Explicitly enable CORS
+            headers: { 
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ 
-                idToken: response.credential 
-            })
+            body: JSON.stringify({ idToken: response.credential })
         });
 
         if (!res.ok) {

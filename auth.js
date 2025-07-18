@@ -6,6 +6,9 @@ const otpForm = document.getElementById('otp-form');
 const closeModal = document.querySelector('.close-modal');
 const showRegister = document.getElementById('show-register');
 const showLogin = document.getElementById('show-login');
+const loginBtn = document.getElementById('login-btn');
+const registerBtn = document.getElementById('register-btn');
+const verifyOtpBtn = document.getElementById('verify-otp-btn');
 
 // API Configuration
 const API_BASE_URL = 'https://rise-api-solarryn-cchvathwafa5e6gn.southeastasia-01.azurewebsites.net/api';
@@ -18,84 +21,133 @@ function showLoading(show) {
     }
 }
 
-// Kiểm tra kết nối backend
-async function checkBackendConnection() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/test`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        return response.ok;
-    } catch (error) {
-        console.error("Backend connection error:", error);
-        return false;
+// Xử lý đăng nhập
+async function handleLogin() {
+    const username = document.getElementById('login-username').value;
+    const password = document.getElementById('login-password').value;
+    
+    if (!username || !password) {
+        alert('Vui lòng nhập đầy đủ thông tin');
+        return;
     }
-}
 
-// Xử lý đăng nhập Google
-async function handleGoogleSignIn(response) {
     showLoading(true);
     
     try {
-        // Kiểm tra kết nối backend
-        const isBackendReady = await checkBackendConnection();
-        if (!isBackendReady) {
-            throw new Error('Không thể kết nối đến server. Vui lòng thử lại sau.');
-        }
-
-         const res = await fetch(`${API_BASE_URL}/google-login`, {
+        const response = await fetch(`${API_BASE_URL}/auth/login`, {
             method: 'POST',
-            mode: 'cors', // Explicitly enable CORS
-            headers: { 
-                'Content-Type': 'application/json',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ idToken: response.credential })
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
         });
 
-        if (!res.ok) {
-            const errorData = await res.json().catch(() => ({}));
-            throw new Error(errorData.message || `Lỗi server: ${res.status}`);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Đăng nhập thất bại');
         }
 
-        const data = await res.json();
+        const data = await response.json();
         
-        if (!data.token) {
-            throw new Error('Server không trả về token');
-        }
-
-        // Lưu thông tin người dùng
+        // Lưu token và user data
         localStorage.setItem('authToken', data.token);
-        localStorage.setItem('userData', JSON.stringify({
-            userId: data.userId,
-            email: data.email,
-            userName: data.userName,
-            avatarUrl: data.avatarUrl,
-            hasCharacter: data.hasCharacter
-        }));
-
-        // Cập nhật giao diện
+        localStorage.setItem('userData', JSON.stringify(data.user));
+        
+        // Đóng modal và cập nhật UI
+        authModal.style.display = 'none';
         updateAuthStatus();
         
-        // Chuyển hướng nếu có character
-        if (data.hasCharacter) {
-            window.location.href = 'game.html';
-        } else {
-            window.location.href = 'character-creation.html';
-        }
+        // LUÔN chuyển hướng đến trang game.html sau khi đăng nhập
+        window.location.href = 'game.html';
         
     } catch (error) {
-        console.error('Google Sign-In Error:', error);
-        
-        let errorMessage = 'Lỗi đăng nhập';
-        if (error.message.includes('Failed to fetch')) {
-            errorMessage = 'Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng của bạn.';
-        } else {
-            errorMessage += ': ' + error.message;
+        console.error('Login error:', error);
+        alert('Lỗi đăng nhập: ' + error.message);
+    } finally {
+        showLoading(false);
+    }
+}
+
+// Xử lý đăng ký
+async function handleRegister() {
+    const username = document.getElementById('register-username').value;
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
+    
+    if (!username || !email || !password) {
+        alert('Vui lòng nhập đầy đủ thông tin');
+        return;
+    }
+
+    showLoading(true);
+    
+    try {
+        const response = await fetch(`${API_BASE_URL}/auth/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username,
+                email: email,
+                password: password
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Đăng ký thất bại');
         }
-        
-        alert(errorMessage);
+
+        // Chuyển sang form OTP
+        registerForm.style.display = 'none';
+        otpForm.style.display = 'block';
+    } catch (error) {
+        console.error('Register error:', error);
+        alert('Lỗi đăng ký: ' + error.message);
+    } finally {
+        showLoading(false);
+    }
+}
+
+// Xử lý xác thực OTP
+async function handleVerifyOtp() {
+    const email = document.getElementById('register-email').value;
+    const otp = document.getElementById('otp-code').value;
+    
+    if (!otp) {
+        alert('Vui lòng nhập mã OTP');
+        return;
+    }
+
+    showLoading(true);
+    
+    try {
+        const response = await fetch(`${API_BASE_URL}/auth/verify-email`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                otp: otp
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Xác thực thất bại');
+        }
+
+        alert('Xác thực thành công! Vui lòng đăng nhập');
+        otpForm.style.display = 'none';
+        loginForm.style.display = 'block';
+    } catch (error) {
+        console.error('OTP verification error:', error);
+        alert('Lỗi xác thực: ' + error.message);
     } finally {
         showLoading(false);
     }
@@ -109,19 +161,17 @@ function updateAuthStatus() {
     const loginButton = document.querySelector('.login-button');
     const logoutButton = document.querySelector('.logout-button');
     const userInfoElement = document.querySelector('.user-info');
-    const googleSignInDiv = document.querySelector('.g_id_signin');
 
     if (token) {
         // Đã đăng nhập
         if (loginButton) loginButton.style.display = 'none';
         if (logoutButton) logoutButton.style.display = 'block';
-        if (googleSignInDiv) googleSignInDiv.style.display = 'none';
         
         // Hiển thị thông tin user
         if (userInfoElement) {
             userInfoElement.innerHTML = `
                 <img src="${userData.avatarUrl || 'default-avatar.png'}" class="user-avatar" alt="User Avatar">
-                <span class="user-name">${userData.userName || userData.email || 'User'}</span>
+                <span class="user-name">${userData.username || userData.email || 'User'}</span>
             `;
             userInfoElement.style.display = 'flex';
         }
@@ -130,7 +180,6 @@ function updateAuthStatus() {
         if (loginButton) loginButton.style.display = 'block';
         if (logoutButton) logoutButton.style.display = 'none';
         if (userInfoElement) userInfoElement.style.display = 'none';
-        if (googleSignInDiv) googleSignInDiv.style.display = 'block';
     }
 }
 
@@ -139,11 +188,6 @@ function handleLogout() {
     // Xóa dữ liệu local
     localStorage.removeItem('authToken');
     localStorage.removeItem('userData');
-    
-    // Đăng xuất Google
-    if (typeof google !== 'undefined') {
-        google.accounts.id.disableAutoSelect();
-    }
     
     // Cập nhật giao diện
     updateAuthStatus();
@@ -155,57 +199,23 @@ function handleLogout() {
     window.location.reload();
 }
 
-// Khởi tạo Google Sign-In
-function initializeGoogleSignIn() {
-    if (typeof google !== 'undefined') {
-        google.accounts.id.initialize({
-            client_id: '209103974377-7nveqvs3viq5bjaa8j9vbg4uarqpgir2.apps.googleusercontent.com',
-            callback: handleGoogleSignIn,
-            ux_mode: 'popup',
-            auto_select: false
-        });
-        
-        // Hiển thị nút Google
-        const googleSignInDiv = document.querySelector('.g_id_signin');
-        if (googleSignInDiv) {
-            google.accounts.id.renderButton(googleSignInDiv, {
-                type: 'standard',
-                theme: 'dark',
-                size: 'large',
-                text: 'signin_with',
-                shape: 'rectangular',
-                logo_alignment: 'left'
-            });
-            
-            // Hiển thị nút khi chưa đăng nhập
-            googleSignInDiv.style.display = localStorage.getItem('authToken') ? 'none' : 'block';
-        }
-    }
-}
-
 // Khởi tạo khi trang tải xong
 document.addEventListener('DOMContentLoaded', () => {
-    // Khởi tạo Google Sign-In
-    initializeGoogleSignIn();
-    
     // Kiểm tra trạng thái đăng nhập
     updateAuthStatus();
     
     // Gắn sự kiện đăng xuất
     document.querySelector('.logout-button')?.addEventListener('click', handleLogout);
     
-    // Gắn sự kiện cho nút đăng nhập thủ công
-    document.querySelector('.login-button')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        // Hiển thị popup Google
-        if (typeof google !== 'undefined') {
-            google.accounts.id.prompt();
-        } else {
-            alert('Hệ thống đăng nhập đang tải, vui lòng thử lại sau');
-        }
+    // Gắn sự kiện cho nút đăng nhập
+    document.querySelector('.login-button')?.addEventListener('click', () => {
+        authModal.style.display = 'flex';
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        otpForm.style.display = 'none';
     });
     
-    // Gắn sự kiện cho các form khác
+    // Gắn sự kiện cho các form
     if (closeModal) {
         closeModal.addEventListener('click', () => {
             authModal.style.display = 'none';
@@ -229,12 +239,17 @@ document.addEventListener('DOMContentLoaded', () => {
             otpForm.style.display = 'none';
         });
     }
-});
-
-// Xử lý khi window được focus lại
-window.addEventListener('focus', () => {
-    if (!localStorage.getItem('authToken')) {
-        const googleSignInDiv = document.querySelector('.g_id_signin');
-        if (googleSignInDiv) googleSignInDiv.style.display = 'block';
+    
+    // Gắn sự kiện cho các nút
+    if (loginBtn) {
+        loginBtn.addEventListener('click', handleLogin);
+    }
+    
+    if (registerBtn) {
+        registerBtn.addEventListener('click', handleRegister);
+    }
+    
+    if (verifyOtpBtn) {
+        verifyOtpBtn.addEventListener('click', handleVerifyOtp);
     }
 });

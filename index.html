@@ -7,8 +7,6 @@
     <title>RiseOfSolarryn</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <meta name="google-signin-client_id" content="209103974377-7nveqvs3viq5bjaa8j9vbg4uarqpgir2.apps.googleusercontent.com">
 </head>
 
 <body>
@@ -30,24 +28,6 @@
                 <div class="user-info" style="display: none;">
                     <img src="" class="user-avatar" alt="User Avatar">
                     <span class="user-name"></span>
-                </div>
-                <div class="g_id_signin" style="display: none;"></div>
-            </div>
-                <div id="g_id_onload"
-                    data-client_id="209103974377-7nveqvs3viq5bjaa8j9vbg4uarqpgir2.apps.googleusercontent.com"
-                    data-context="signin" 
-                    data-ux_mode="popup" 
-                    data-callback="handleGoogleSignIn"
-                    data-auto_prompt="false">
-                </div>
-                <div class="g_id_signin" 
-                    data-type="standard" 
-                    data-shape="rectangular" 
-                    data-theme="dark"
-                    data-text="signin_with" 
-                    data-size="large" 
-                    data-logo_alignment="left" 
-                    style="display: none;">
                 </div>
             </div>
         </div>
@@ -228,14 +208,14 @@
             <span class="close-modal">&times;</span>
             <div id="login-form">
                 <h3>Đăng Nhập</h3>
-                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="text" id="login-username" placeholder="Tên đăng nhập" required>
                 <input type="password" id="login-password" placeholder="Mật khẩu" required>
                 <button id="login-btn" class="btn-login">Đăng Nhập</button>
                 <p class="switch-form">Chưa có tài khoản? <a href="#" id="show-register">Đăng ký ngay</a></p>
             </div>
             <div id="register-form" style="display: none;">
                 <h3>Đăng Ký</h3>
-                <input type="text" id="register-username" placeholder="Họ và tên" required>
+                <input type="text" id="register-username" placeholder="Tên đăng nhập" required>
                 <input type="email" id="register-email" placeholder="Email" required>
                 <input type="password" id="register-password" placeholder="Mật khẩu" required>
                 <button id="register-btn" class="btn-register">Đăng Ký</button>
@@ -252,49 +232,9 @@
 
     <script src="auth.js"></script>
     <script>
-        // Initialize Google Sign-In
-        function initializeGoogleSignIn() {
-            if (typeof google !== 'undefined') {
-                google.accounts.id.initialize({
-                    client_id: '209103974377-7nveqvs3viq5bjaa8j9vbg4uarqpgir2.apps.googleusercontent.com',
-                    callback: handleGoogleSignIn
-                });
-            }
-        }
-
-        // Handle Google Sign-In
-        async function handleGoogleSignIn(response) {
-            showLoading(true);
-            
-            try {
-                const res = await fetch('http://localhost:5226/api/auth/google-login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ idToken: response.credential })
-                });
-
-                const data = await res.json();
-                
-                if (!res.ok) throw new Error(data.message || 'Đăng nhập thất bại');
-                
-                localStorage.setItem('authToken', data.token);
-                localStorage.setItem('userData', JSON.stringify({
-                    userId: data.userId,
-                    email: data.email,
-                    userName: data.userName,
-                    avatarUrl: data.avatarUrl
-                }));
-                
-                updateAuthStatus();
-                window.location.href = 'game.html';
-            } catch (error) {
-                console.error('Google Sign-In Error:', error);
-                alert('Lỗi đăng nhập: ' + error.message);
-            } finally {
-                showLoading(false);
-            }
+        // Show/hide loading
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'flex' : 'none';
         }
 
         // Update auth status UI
@@ -305,12 +245,10 @@
             const loginBtn = document.querySelector('.login-button');
             const logoutBtn = document.querySelector('.logout-button');
             const userInfo = document.querySelector('.user-info');
-            const googleSignIn = document.querySelector('.g_id_signin');
 
             if (token) {
                 loginBtn.style.display = 'none';
                 logoutBtn.style.display = 'block';
-                googleSignIn.style.display = 'none';
                 
                 if (userInfo) {
                     const avatar = userInfo.querySelector('.user-avatar');
@@ -325,18 +263,11 @@
                 loginBtn.style.display = 'block';
                 logoutBtn.style.display = 'none';
                 if (userInfo) userInfo.style.display = 'none';
-                googleSignIn.style.display = 'block';
             }
-        }
-
-        // Show/hide loading
-        function showLoading(show) {
-            document.getElementById('loading').style.display = show ? 'flex' : 'none';
         }
 
         // Initialize when DOM loaded
         document.addEventListener('DOMContentLoaded', () => {
-            initializeGoogleSignIn();
             updateAuthStatus();
             
             // Banner navigation
@@ -377,18 +308,19 @@
                 localStorage.removeItem('authToken');
                 localStorage.removeItem('userData');
                 updateAuthStatus();
-                
-                if (typeof google !== 'undefined') {
-                    google.accounts.id.disableAutoSelect();
-                }
-                
                 window.location.href = 'index.html';
+            });
+
+            // Login button
+            document.querySelector('.login-button')?.addEventListener('click', () => {
+                document.getElementById('auth-modal').style.display = 'flex';
+            });
+
+            // Close modal
+            document.querySelector('.close-modal')?.addEventListener('click', () => {
+                document.getElementById('auth-modal').style.display = 'none';
             });
         });
     </script>
-    <div id="loading" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center; flex-direction:column;">
-        <div class="spinner"></div>
-        <span style="color:white; margin-top:20px;">Đang xử lý...</span>
-    </div>
 </body>
 </html>

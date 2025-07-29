@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - RiseOfSolarryn</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="Hình/t1.png" alt="Game Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Quản lý User</a></li>
+                    <li><a href="#">Quản lý Game</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="logout-button">Đăng Xuất</button>
+                <div class="user-info">
+                    <span class="admin-badge">ADMIN</span>
+                    <span class="user-name"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="admin-container">
+        <h1>Chào mừng Admin</h1>
+        <div class="admin-content">
+            <!-- Nội dung admin panel -->
+        </div>
+    </main>
+
+    <script src="auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            
+            // Kiểm tra quyền admin
+            if (userData.role !== 'ADMIN') {
+                alert('Bạn không có quyền truy cập trang này');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Hiển thị thông tin user
+            document.querySelector('.user-name').textContent = userData.userName || userData.email;
+        });
+    </script>
+</body>
+</html>

@@ -1,3 +1,5 @@
+const API_BASE_URL = 'https://riseofsolaryn-api.onrender.com/api';  
+
 // DOM Elements
 const authModal = document.getElementById('auth-modal');
 const loginForm = document.getElementById('login-form');
@@ -10,9 +12,6 @@ const loginBtn = document.getElementById('login-btn');
 const registerBtn = document.getElementById('register-btn');
 const verifyOtpBtn = document.getElementById('verify-otp-btn');
 
-// API Configuration
-const API_BASE_URL = 'https://rise-api-solarryn-cchvathwafa5e6gn.southeastasia-01.azurewebsites.net/api';
-
 // Hiển thị loading
 function showLoading(show) {
     const loadingElement = document.getElementById('loading');
@@ -21,13 +20,18 @@ function showLoading(show) {
     }
 }
 
+// Hiển thị thông báo lỗi
+function showError(message) {
+    alert(message); // Có thể thay bằng hiển thị đẹp hơn
+}
+
 // Xử lý đăng nhập
 async function handleLogin() {
     const username = document.getElementById('login-username').value;
     const password = document.getElementById('login-password').value;
     
     if (!username || !password) {
-        alert('Vui lòng nhập đầy đủ thông tin');
+        showError('Vui lòng nhập đầy đủ thông tin');
         return;
     }
 
@@ -45,27 +49,29 @@ async function handleLogin() {
             })
         });
 
+        const data = await response.json();
+
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Đăng nhập thất bại');
+            throw new Error(data.message || 'Đăng nhập thất bại');
         }
 
-        const data = await response.json();
-        
         // Lưu token và user data
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('userData', JSON.stringify(data.user));
         
-        // Đóng modal và cập nhật UI
+        // Đóng modal
         authModal.style.display = 'none';
-        updateAuthStatus();
         
-        // LUÔN chuyển hướng đến trang game.html sau khi đăng nhập
-        window.location.href = 'game.html';
+        // Chuyển hướng theo role
+        if (data.user.role === 'ADMIN') {
+            window.location.href = 'admin.html';
+        } else {
+            window.location.href = 'game.html';
+        }
         
     } catch (error) {
         console.error('Login error:', error);
-        alert('Lỗi đăng nhập: ' + error.message);
+        showError(error.message);
     } finally {
         showLoading(false);
     }
@@ -78,7 +84,7 @@ async function handleRegister() {
     const password = document.getElementById('register-password').value;
     
     if (!username || !email || !password) {
-        alert('Vui lòng nhập đầy đủ thông tin');
+        showError('Vui lòng nhập đầy đủ thông tin');
         return;
     }
 
@@ -97,17 +103,20 @@ async function handleRegister() {
             })
         });
 
+        const data = await response.json();
+
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Đăng ký thất bại');
+            throw new Error(data.message || 'Đăng ký thất bại');
         }
 
-        // Chuyển sang form OTP
+        // Chuyển sang form OTP và lưu tạm email
+        localStorage.setItem('tempEmail', email);
         registerForm.style.display = 'none';
         otpForm.style.display = 'block';
+        
     } catch (error) {
         console.error('Register error:', error);
-        alert('Lỗi đăng ký: ' + error.message);
+        showError(error.message);
     } finally {
         showLoading(false);
     }
@@ -115,11 +124,11 @@ async function handleRegister() {
 
 // Xử lý xác thực OTP
 async function handleVerifyOtp() {
-    const email = document.getElementById('register-email').value;
     const otp = document.getElementById('otp-code').value;
+    const email = localStorage.getItem('tempEmail');
     
     if (!otp) {
-        alert('Vui lòng nhập mã OTP');
+        showError('Vui lòng nhập mã OTP');
         return;
     }
 
@@ -137,17 +146,23 @@ async function handleVerifyOtp() {
             })
         });
 
+        const data = await response.json();
+
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Xác thực thất bại');
+            throw new Error(data.message || 'Xác thực thất bại');
         }
 
+        // Xóa email tạm
+        localStorage.removeItem('tempEmail');
+        
+        // Thông báo và chuyển về form login
         alert('Xác thực thành công! Vui lòng đăng nhập');
         otpForm.style.display = 'none';
         loginForm.style.display = 'block';
+        
     } catch (error) {
         console.error('OTP verification error:', error);
-        alert('Lỗi xác thực: ' + error.message);
+        showError(error.message);
     } finally {
         showLoading(false);
     }
@@ -170,8 +185,9 @@ function updateAuthStatus() {
         // Hiển thị thông tin user
         if (userInfoElement) {
             userInfoElement.innerHTML = `
+                ${userData.role === 'ADMIN' ? '<span class="admin-badge">ADMIN</span>' : ''}
                 <img src="${userData.avatarUrl || 'default-avatar.png'}" class="user-avatar" alt="User Avatar">
-                <span class="user-name">${userData.username || userData.email || 'User'}</span>
+                <span class="user-name">${userData.userName || userData.email || 'User'}</span>
             `;
             userInfoElement.style.display = 'flex';
         }
@@ -185,18 +201,10 @@ function updateAuthStatus() {
 
 // Xử lý đăng xuất
 function handleLogout() {
-    // Xóa dữ liệu local
     localStorage.removeItem('authToken');
     localStorage.removeItem('userData');
-    
-    // Cập nhật giao diện
     updateAuthStatus();
-    
-    // Thông báo
-    alert('Đã đăng xuất thành công');
-    
-    // Reload trang
-    window.location.reload();
+    window.location.href = 'index.html';
 }
 
 // Khởi tạo khi trang tải xong
@@ -215,41 +223,26 @@ document.addEventListener('DOMContentLoaded', () => {
         otpForm.style.display = 'none';
     });
     
-    // Gắn sự kiện cho các form
-    if (closeModal) {
-        closeModal.addEventListener('click', () => {
-            authModal.style.display = 'none';
-        });
-    }
+    // Gắn sự kiện đóng modal
+    closeModal?.addEventListener('click', () => {
+        authModal.style.display = 'none';
+    });
     
-    if (showRegister) {
-        showRegister.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginForm.style.display = 'none';
-            registerForm.style.display = 'block';
-            otpForm.style.display = 'none';
-        });
-    }
+    // Chuyển đổi giữa các form
+    showRegister?.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+    });
     
-    if (showLogin) {
-        showLogin.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginForm.style.display = 'block';
-            registerForm.style.display = 'none';
-            otpForm.style.display = 'none';
-        });
-    }
+    showLogin?.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+    });
     
     // Gắn sự kiện cho các nút
-    if (loginBtn) {
-        loginBtn.addEventListener('click', handleLogin);
-    }
-    
-    if (registerBtn) {
-        registerBtn.addEventListener('click', handleRegister);
-    }
-    
-    if (verifyOtpBtn) {
-        verifyOtpBtn.addEventListener('click', handleVerifyOtp);
-    }
+    loginBtn?.addEventListener('click', handleLogin);
+    registerBtn?.addEventListener('click', handleRegister);
+    verifyOtpBtn?.addEventListener('click', handleVerifyOtp);
 });

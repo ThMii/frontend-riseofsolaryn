@@ -161,6 +161,34 @@
         </div>
     </section>
 
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="login-form">
+                <h3>Đăng Nhập</h3>
+                <input type="text" id="login-username" placeholder="Tên đăng nhập" required>
+                <input type="password" id="login-password" placeholder="Mật khẩu" required>
+                <button id="login-btn" class="btn-login">Đăng Nhập</button>
+                <p class="switch-form">Chưa có tài khoản? <a href="#" id="show-register">Đăng ký ngay</a></p>
+            </div>
+            <div id="register-form" style="display: none;">
+                <h3>Đăng Ký</h3>
+                <input type="text" id="register-username" placeholder="Tên đăng nhập" required>
+                <input type="email" id="register-email" placeholder="Email" required>
+                <input type="password" id="register-password" placeholder="Mật khẩu" required>
+                <button id="register-btn" class="btn-register">Đăng Ký</button>
+                <p class="switch-form">Đã có tài khoản? <a href="#" id="show-login">Đăng nhập</a></p>
+            </div>
+            <div id="otp-form" style="display: none;">
+                <h3>Xác Thực OTP</h3>
+                <p>Mã OTP đã được gửi đến email của bạn</p>
+                <input type="text" id="otp-code" placeholder="Nhập mã OTP" required>
+                <button id="verify-otp-btn" class="btn-verify">Xác Nhận</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="footer-container">
@@ -201,35 +229,6 @@
             <p>© 2025 6 anh em siêu nhân Studios. Rise of Solarryn.</p>
         </div>
     </footer>
-
-    <!-- Auth Modal -->
-    <div id="auth-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div id="login-form">
-                <h3>Đăng Nhập</h3>
-                <input type="text" id="login-username" placeholder="Tên đăng nhập" required>
-                <input type="password" id="login-password" placeholder="Mật khẩu" required>
-                <button id="login-btn" class="btn-login">Đăng Nhập</button>
-                <p class="switch-form">Chưa có tài khoản? <a href="#" id="show-register">Đăng ký ngay</a></p>
-            </div>
-            <div id="register-form" style="display: none;">
-                <h3>Đăng Ký</h3>
-                <input type="text" id="register-username" placeholder="Tên đăng nhập" required>
-                <input type="email" id="register-email" placeholder="Email" required>
-                <input type="password" id="register-password" placeholder="Mật khẩu" required>
-                <button id="register-btn" class="btn-register">Đăng Ký</button>
-                <p class="switch-form">Đã có tài khoản? <a href="#" id="show-login">Đăng nhập</a></p>
-            </div>
-            <div id="otp-form" style="display: none;">
-                <h3>Xác Thực OTP</h3>
-                <p>Mã OTP đã được gửi đến email của bạn</p>
-                <input type="text" id="otp-code" placeholder="Nhập mã OTP" required>
-                <button id="verify-otp-btn" class="btn-verify">Xác Nhận</button>
-            </div>
-        </div>
-    </div>
-
     <script src="auth.js"></script>
     <script>
         // Show/hide loading

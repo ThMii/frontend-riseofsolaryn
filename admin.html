@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - RiseOfSolarryn</title>
     <link rel="stylesheet" href="admin.css">
 </head>
+
 <body>
     <header>
         <div class="header-container">
@@ -26,19 +28,43 @@
             </div>
         </div>
     </header>
-
     <main class="admin-container">
         <h1>Chào mừng Admin</h1>
         <div class="admin-content">
-            <!-- Nội dung admin panel -->
+            <h2>Quản lý giao dịch nạp tiền</h2>
+            <div class="transaction-filters">
+                <select id="transaction-status">
+                    <option value="PENDING">Đang chờ</option>
+                    <option value="COMPLETED">Hoàn thành</option>
+                    <option value="FAILED">Thất bại</option>
+                    <option value="ALL">Tất cả</option>
+                </select>
+                <button id="refresh-btn">Làm mới</button>
+            </div>
+
+            <table class="transactions-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Người dùng</th>
+                        <th>Số tiền</th>
+                        <th>Mã giao dịch</th>
+                        <th>Trạng thái</th>
+                        <th>Thời gian</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="transactions-list">
+                    <!-- Dữ liệu sẽ được load bằng JS -->
+                </tbody>
+            </table>
         </div>
     </main>
-
     <script src="auth.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-            
+
             // Kiểm tra quyền admin
             if (userData.role !== 'ADMIN') {
                 alert('Bạn không có quyền truy cập trang này');
@@ -51,4 +77,5 @@
         });
     </script>
 </body>
+
 </html>

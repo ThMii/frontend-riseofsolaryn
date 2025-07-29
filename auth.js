@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://riseofsolaryn-api.onrender.com/api';  
+const API_BASE_URL = 'https://riseofsolaryn-api.onrender.com/api';
 
 // DOM Elements
 const authModal = document.getElementById('auth-modal');
@@ -29,14 +29,14 @@ function showError(message) {
 async function handleLogin() {
     const username = document.getElementById('login-username').value;
     const password = document.getElementById('login-password').value;
-    
+
     if (!username || !password) {
         showError('Vui lòng nhập đầy đủ thông tin');
         return;
     }
 
     showLoading(true);
-    
+
     try {
         const response = await fetch(`${API_BASE_URL}/auth/login`, {
             method: 'POST',
@@ -58,17 +58,17 @@ async function handleLogin() {
         // Lưu token và user data
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('userData', JSON.stringify(data.user));
-        
+
         // Đóng modal
         authModal.style.display = 'none';
-        
+
         // Chuyển hướng theo role
         if (data.user.role === 'ADMIN') {
             window.location.href = 'admin.html';
         } else {
             window.location.href = 'game.html';
         }
-        
+
     } catch (error) {
         console.error('Login error:', error);
         showError(error.message);
@@ -82,14 +82,14 @@ async function handleRegister() {
     const username = document.getElementById('register-username').value;
     const email = document.getElementById('register-email').value;
     const password = document.getElementById('register-password').value;
-    
+
     if (!username || !email || !password) {
         showError('Vui lòng nhập đầy đủ thông tin');
         return;
     }
 
     showLoading(true);
-    
+
     try {
         const response = await fetch(`${API_BASE_URL}/auth/register`, {
             method: 'POST',
@@ -113,7 +113,7 @@ async function handleRegister() {
         localStorage.setItem('tempEmail', email);
         registerForm.style.display = 'none';
         otpForm.style.display = 'block';
-        
+
     } catch (error) {
         console.error('Register error:', error);
         showError(error.message);
@@ -126,14 +126,14 @@ async function handleRegister() {
 async function handleVerifyOtp() {
     const otp = document.getElementById('otp-code').value;
     const email = localStorage.getItem('tempEmail');
-    
+
     if (!otp) {
         showError('Vui lòng nhập mã OTP');
         return;
     }
 
     showLoading(true);
-    
+
     try {
         const response = await fetch(`${API_BASE_URL}/auth/verify-email`, {
             method: 'POST',
@@ -154,12 +154,12 @@ async function handleVerifyOtp() {
 
         // Xóa email tạm
         localStorage.removeItem('tempEmail');
-        
+
         // Thông báo và chuyển về form login
         alert('Xác thực thành công! Vui lòng đăng nhập');
         otpForm.style.display = 'none';
         loginForm.style.display = 'block';
-        
+
     } catch (error) {
         console.error('OTP verification error:', error);
         showError(error.message);
@@ -172,7 +172,7 @@ async function handleVerifyOtp() {
 function updateAuthStatus() {
     const token = localStorage.getItem('authToken');
     const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    
+
     const loginButton = document.querySelector('.login-button');
     const logoutButton = document.querySelector('.logout-button');
     const userInfoElement = document.querySelector('.user-info');
@@ -181,7 +181,7 @@ function updateAuthStatus() {
         // Đã đăng nhập
         if (loginButton) loginButton.style.display = 'none';
         if (logoutButton) logoutButton.style.display = 'block';
-        
+
         // Hiển thị thông tin user
         if (userInfoElement) {
             userInfoElement.innerHTML = `
@@ -211,10 +211,10 @@ function handleLogout() {
 document.addEventListener('DOMContentLoaded', () => {
     // Kiểm tra trạng thái đăng nhập
     updateAuthStatus();
-    
+
     // Gắn sự kiện đăng xuất
     document.querySelector('.logout-button')?.addEventListener('click', handleLogout);
-    
+
     // Gắn sự kiện cho nút đăng nhập
     document.querySelector('.login-button')?.addEventListener('click', () => {
         authModal.style.display = 'flex';
@@ -222,27 +222,64 @@ document.addEventListener('DOMContentLoaded', () => {
         registerForm.style.display = 'none';
         otpForm.style.display = 'none';
     });
-    
+
     // Gắn sự kiện đóng modal
     closeModal?.addEventListener('click', () => {
         authModal.style.display = 'none';
     });
-    
+
     // Chuyển đổi giữa các form
     showRegister?.addEventListener('click', (e) => {
         e.preventDefault();
         loginForm.style.display = 'none';
         registerForm.style.display = 'block';
     });
-    
+
     showLogin?.addEventListener('click', (e) => {
         e.preventDefault();
         loginForm.style.display = 'block';
         registerForm.style.display = 'none';
     });
-    
+
     // Gắn sự kiện cho các nút
     loginBtn?.addEventListener('click', handleLogin);
     registerBtn?.addEventListener('click', handleRegister);
     verifyOtpBtn?.addEventListener('click', handleVerifyOtp);
 });
+
+async function createTransaction(amount) {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        showError('Vui lòng đăng nhập');
+        return;
+    }
+
+    showLoading(true);
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/transactions`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                amount: amount
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Tạo giao dịch thất bại');
+        }
+
+        return data;
+    } catch (error) {
+        console.error('Transaction error:', error);
+        showError(error.message);
+        return null;
+    } finally {
+        showLoading(false);
+    }
+}

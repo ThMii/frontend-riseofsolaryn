@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - RiseOfSolarryn</title>
+    <title>Admin - Quản lý giao dịch | RiseOfSolarryn</title>
     <link rel="stylesheet" href="admin.css">
 </head>
-
 <body>
+    <div id="loading">
+        <div class="spinner"></div>
+        <span>Đang tải dữ liệu...</span>
+    </div>
+
     <header>
         <div class="header-container">
             <img src="Hình/t1.png" alt="Game Logo" class="logo">
             <nav>
                 <ul>
-                    <li><a href="#">Dashboard</a></li>
-                    <li><a href="#">Quản lý User</a></li>
-                    <li><a href="#">Quản lý Game</a></li>
+                    <li><a href="#" class="active">Giao dịch</a></li>
+                    <li><a href="#">Người dùng</a></li>
+                    <li><a href="#">Cài đặt</a></li>
                 </ul>
             </nav>
             <div class="auth-buttons">
@@ -28,54 +31,41 @@
             </div>
         </div>
     </header>
-    <main class="admin-container">
-        <h1>Chào mừng Admin</h1>
-        <div class="admin-content">
-            <h2>Quản lý giao dịch nạp tiền</h2>
-            <div class="transaction-filters">
-                <select id="transaction-status">
-                    <option value="PENDING">Đang chờ</option>
-                    <option value="COMPLETED">Hoàn thành</option>
-                    <option value="FAILED">Thất bại</option>
-                    <option value="ALL">Tất cả</option>
-                </select>
-                <button id="refresh-btn">Làm mới</button>
-            </div>
 
+    <main class="admin-container">
+        <h1>Quản lý giao dịch nạp tiền</h1>
+        
+        <div class="filters">
+            <select id="status-filter">
+                <option value="ALL">Tất cả trạng thái</option>
+                <option value="PENDING">Đang chờ xử lý</option>
+                <option value="COMPLETED">Đã hoàn thành</option>
+                <option value="FAILED">Thất bại</option>
+            </select>
+            <button id="refresh-btn">Làm mới</button>
+        </div>
+
+        <div class="transactions-container">
             <table class="transactions-table">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Người dùng</th>
                         <th>Số tiền</th>
-                        <th>Mã giao dịch</th>
+                        <th>Phương thức</th>
                         <th>Trạng thái</th>
                         <th>Thời gian</th>
                         <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody id="transactions-list">
-                    <!-- Dữ liệu sẽ được load bằng JS -->
+                    <!-- Dữ liệu sẽ được load bằng JavaScript -->
                 </tbody>
             </table>
         </div>
     </main>
+
     <script src="auth.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-
-            // Kiểm tra quyền admin
-            if (userData.role !== 'ADMIN') {
-                alert('Bạn không có quyền truy cập trang này');
-                window.location.href = 'index.html';
-                return;
-            }
-
-            // Hiển thị thông tin user
-            document.querySelector('.user-name').textContent = userData.userName || userData.email;
-        });
-    </script>
+    <script src="admin.js"></script>
 </body>
-
 </html>

@@ -7,10 +7,55 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load dữ liệu ban đầu
     loadTransactions();
     
-    // Gắn sự kiện
-    document.getElementById('refresh-btn').addEventListener('click', loadTransactions);
-    document.getElementById('status-filter').addEventListener('change', loadTransactions);
-    document.querySelector('.logout-button').addEventListener('click', logout);
+    // Gắn sự kiện filter
+    const refreshBtn = document.getElementById('refresh-btn');
+    if (refreshBtn) refreshBtn.addEventListener('click', loadTransactions);
+
+    const statusFilter = document.getElementById('status-filter');
+    if (statusFilter) statusFilter.addEventListener('change', loadTransactions);
+
+    // Xử lý avatar + tên
+    const userData = JSON.parse(localStorage.getItem('userData')) || {};
+    const avatar = document.querySelector('.user-avatar');
+    const name = document.querySelector('.user-name');
+
+    if (avatar) avatar.src = userData.avatarUrl || 'Hình/avt.jpg';
+    if (name) name.textContent = userData.userName || 'Admin';
+
+    // Dropdown menu
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+    const userMenu = document.querySelector('.user-menu');
+
+    if (dropdownToggle && userMenu) {
+        dropdownToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userMenu.classList.toggle('active');
+        });
+
+        // Click ngoài để đóng menu
+        document.addEventListener('click', () => {
+            userMenu.classList.remove('active');
+        });
+    }
+
+    // Logout trong dropdown
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logout();
+        });
+    }
+
+    // Thông tin cá nhân
+    const profileBtn = document.getElementById('profile-btn');
+    if (profileBtn) {
+        profileBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Trang thông tin cá nhân sẽ mở ở đây.');
+            // Hoặc: window.location.href = 'profile.html';
+        });
+    }
 });
 
 // Kiểm tra quyền admin

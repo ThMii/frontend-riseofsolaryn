@@ -1,13 +1,68 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Kiểm tra đăng nhập và quyền admin
     checkAdminAuth();
+
+    // Load danh sách ban đầu
     loadUsers();
 
-    document.getElementById('search-btn').addEventListener('click', loadUsers);
-    document.getElementById('refresh-btn').addEventListener('click', () => {
-        document.getElementById('search-input').value = '';
-        loadUsers();
-    });
-    document.querySelector('.logout-button').addEventListener('click', logout);
+    // Sự kiện tìm kiếm
+    const searchBtn = document.getElementById('search-btn');
+    if (searchBtn) {
+        searchBtn.addEventListener('click', loadUsers);
+    }
+
+    // Sự kiện refresh
+    const refreshBtn = document.getElementById('refresh-btn');
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', () => {
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) searchInput.value = '';
+            loadUsers();
+        });
+    }
+
+    // Avatar + tên admin
+    const userData = JSON.parse(localStorage.getItem('userData')) || {};
+    const avatar = document.querySelector('.user-avatar');
+    const name = document.querySelector('.user-name');
+
+    if (avatar) avatar.src = userData.avatarUrl || 'Hình/avt.jpg';
+    if (name) name.textContent = userData.userName || 'Admin';
+
+    // Dropdown menu
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+    const userMenu = document.querySelector('.user-menu');
+
+    if (dropdownToggle && userMenu) {
+        dropdownToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userMenu.classList.toggle('active');
+        });
+
+        // Click bên ngoài để đóng menu
+        document.addEventListener('click', () => {
+            userMenu.classList.remove('active');
+        });
+    }
+
+    // Logout trong dropdown
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logout();
+        });
+    }
+
+    // Thông tin cá nhân
+    const profileBtn = document.getElementById('profile-btn');
+    if (profileBtn) {
+        profileBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Trang thông tin cá nhân sẽ mở ở đây.');
+            // Hoặc: window.location.href = 'profile.html';
+        });
+    }
 });
 
 async function checkAdminAuth() {

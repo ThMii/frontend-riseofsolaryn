@@ -186,7 +186,7 @@ function updateAuthStatus() {
         if (userInfoElement) {
             userInfoElement.innerHTML = `
                 ${userData.role === 'ADMIN' ? '<span class="admin-badge">ADMIN</span>' : ''}
-                <img src="${userData.avatarUrl || 'default-avatar.png'}" class="user-avatar" alt="User Avatar">
+                <img src="${userData.avatarUrl || 'Hình/avt.jpg'}" class="user-avatar" alt="User Avatar">
                 <span class="user-name">${userData.userName || userData.email || 'User'}</span>
             `;
             userInfoElement.style.display = 'flex';

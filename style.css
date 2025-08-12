@@ -127,7 +127,17 @@ nav ul li a:hover {
     object-fit: cover;
     transition: opacity 0.5s ease;
 }
+.banner-image {
+    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.5s ease;
+}
 
+.banner-image.active {
+    display: block;
+}
 /* Info Panel */
 .info-panel {
     position: absolute;

@@ -109,6 +109,24 @@ nav ul li a:hover, nav ul li a.active {
 .logout-button:hover {
     background-color: #444;
 }
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-name {
+    color: white;
+    font-size: 14px;
+}
+
 
 .admin-container {
     max-width: 1200px;

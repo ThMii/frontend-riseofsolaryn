@@ -1,89 +1,59 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Kiểm tra đăng nhập và quyền admin
     checkAdminAuth();
-
-    // Load danh sách ban đầu
     loadUsers();
 
-    // Sự kiện tìm kiếm
-    const searchBtn = document.getElementById('search-btn');
-    if (searchBtn) {
-        searchBtn.addEventListener('click', loadUsers);
-    }
+    // Tìm kiếm
+    document.getElementById('search-btn').addEventListener('click', loadUsers);
 
-    // Sự kiện refresh
-    const refreshBtn = document.getElementById('refresh-btn');
-    if (refreshBtn) {
-        refreshBtn.addEventListener('click', () => {
-            const searchInput = document.getElementById('search-input');
-            if (searchInput) searchInput.value = '';
-            loadUsers();
-        });
-    }
+    // Làm mới
+    document.getElementById('refresh-btn').addEventListener('click', () => {
+        document.getElementById('search-input').value = '';
+        loadUsers();
+    });
 
     // Avatar + tên admin
     const userData = JSON.parse(localStorage.getItem('userData')) || {};
-    const avatar = document.querySelector('.user-avatar');
-    const name = document.querySelector('.user-name');
-
-    if (avatar) avatar.src = userData.avatarUrl || 'Hình/avt.jpg';
-    if (name) name.textContent = userData.userName || 'Admin';
+    document.querySelector('.user-avatar').src = userData.avatarUrl || 'Hình/avt.jpg';
+    document.querySelector('.user-name').textContent = userData.userName || 'Admin';
 
     // Dropdown menu
     const dropdownToggle = document.querySelector('.dropdown-toggle');
     const userMenu = document.querySelector('.user-menu');
+    dropdownToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        userMenu.classList.toggle('active');
+    });
+    document.addEventListener('click', () => userMenu.classList.remove('active'));
 
-    if (dropdownToggle && userMenu) {
-        dropdownToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            userMenu.classList.toggle('active');
-        });
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        logout();
+    });
 
-        // Click bên ngoài để đóng menu
-        document.addEventListener('click', () => {
-            userMenu.classList.remove('active');
-        });
-    }
+    // Profile
+    document.getElementById('profile-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Trang thông tin cá nhân sẽ mở ở đây.');
+    });
 
-    // Logout trong dropdown
-    const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            logout();
-        });
-    }
-
-    // Thông tin cá nhân
-    const profileBtn = document.getElementById('profile-btn');
-    if (profileBtn) {
-        profileBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('Trang thông tin cá nhân sẽ mở ở đây.');
-            // Hoặc: window.location.href = 'profile.html';
-        });
-    }
+    // Đóng modal
+    document.querySelector('.close-btn').addEventListener('click', () => {
+        document.getElementById('user-modal').style.display = 'none';
+    });
 });
 
+// Kiểm tra quyền admin
 async function checkAdminAuth() {
     const token = localStorage.getItem('authToken');
     const userData = JSON.parse(localStorage.getItem('userData'));
-
-    if (!token || !userData) {
-        alert('Vui lòng đăng nhập');
+    if (!token || !userData || userData.role !== 'ADMIN') {
+        alert('Bạn không có quyền truy cập');
         window.location.href = 'index.html';
-        return;
     }
-
-    if (userData.role !== 'ADMIN') {
-        alert('Bạn không có quyền truy cập trang này');
-        window.location.href = 'index.html';
-        return;
-    }
-
-    document.querySelector('.user-name').textContent = userData.userName || userData.email;
 }
 
+// Load danh sách user
 async function loadUsers() {
     showLoading(true);
     try {
@@ -95,29 +65,27 @@ async function loadUsers() {
             url = `${API_BASE_URL}/admin/users?search=${encodeURIComponent(search)}`;
         }
 
-        const response = await fetch(url, {
+        const res = await fetch(url, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
-
-        if (!response.ok) throw new Error('Không thể tải dữ liệu người dùng');
-
-        const data = await response.json();
-        const users = data.users || data.Users || [];
+        const data = await res.json();
+        const users = data.users || data;
 
         renderUsers(users);
     } catch (err) {
+        alert('Không thể tải danh sách người dùng');
         console.error(err);
-        alert(err.message);
     } finally {
         showLoading(false);
     }
 }
 
+// Render danh sách
 function renderUsers(users) {
     const tbody = document.getElementById('users-list');
     tbody.innerHTML = '';
 
-    if (users.length === 0) {
+    if (!users || users.length === 0) {
         tbody.innerHTML = `<tr><td colspan="7" class="no-data">Không có người dùng nào</td></tr>`;
         return;
     }
@@ -131,39 +99,38 @@ function renderUsers(users) {
             <td>${user.role}</td>
             <td>${new Date(user.createdAt).toLocaleString('vi-VN')}</td>
             <td>${user.lastLogin ? new Date(user.lastLogin).toLocaleString('vi-VN') : 'Chưa đăng nhập'}</td>
-            <td><button class="btn-delete" data-id="${user.userId}">Xóa</button></td>
+            <td><button class="btn-view" data-id="${user.userId}">Xem</button></td>
         `;
         tbody.appendChild(tr);
     });
 
-    document.querySelectorAll('.btn-delete').forEach(btn => {
-        btn.addEventListener('click', () => deleteUser(btn.dataset.id));
+    document.querySelectorAll('.btn-view').forEach(btn => {
+        btn.addEventListener('click', () => showUserDetail(btn.dataset.id, users));
     });
 }
 
-async function deleteUser(userId) {
-    if (!confirm(`Bạn có chắc muốn xóa người dùng ID ${userId}?`)) return;
+// Hiển thị modal chi tiết user
+function showUserDetail(userId, users) {
+    const user = users.find(u => u.userId == userId);
+    if (!user) return;
 
-    try {
-        const token = localStorage.getItem('authToken');
-        const res = await fetch(`${API_BASE_URL}/admin/users/${userId}`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
+    document.getElementById('modal-userid').textContent = user.userId;
+    document.getElementById('modal-email').textContent = user.email;
+    document.getElementById('modal-username').textContent = user.userName;
+    document.getElementById('modal-role').textContent = user.role;
+    document.getElementById('modal-created').textContent = new Date(user.createdAt).toLocaleString('vi-VN');
+    document.getElementById('modal-diamonds').textContent = user.diamonds || 0;
+    document.getElementById('modal-character').textContent = user.characters?.[0]?.className || 'Chưa có';
 
-        if (!res.ok) throw new Error('Xóa người dùng thất bại');
-
-        alert('Xóa thành công');
-        loadUsers();
-    } catch (err) {
-        alert(err.message);
-    }
+    document.getElementById('user-modal').style.display = 'block';
 }
 
+// Loading
 function showLoading(show) {
     document.getElementById('loading').style.display = show ? 'flex' : 'none';
 }
 
+// Logout
 function logout() {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userData');

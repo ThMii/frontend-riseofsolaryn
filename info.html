@@ -59,11 +59,26 @@
                     </tr>
                 </thead>
                 <tbody id="users-list">
-                    <!-- Dữ liệu sẽ được render bằng JS -->
+                    <!-- Dữ liệu render bằng JS -->
                 </tbody>
             </table>
         </div>
     </main>
+
+    <!-- Modal hiển thị chi tiết -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Thông tin người dùng</h2>
+            <p><strong>UserID:</strong> <span id="modal-userid"></span></p>
+            <p><strong>Email:</strong> <span id="modal-email"></span></p>
+            <p><strong>Tên đăng nhập:</strong> <span id="modal-username"></span></p>
+            <p><strong>Role:</strong> <span id="modal-role"></span></p>
+            <p><strong>Ngày tạo:</strong> <span id="modal-created"></span></p>
+            <p><strong>Diamonds:</strong> <span id="modal-diamonds"></span></p>
+            <p><strong>Nhân vật:</strong> <span id="modal-character"></span></p>
+        </div>
+    </div>
 
     <script src="auth.js"></script>
     <script src="info.js"></script>

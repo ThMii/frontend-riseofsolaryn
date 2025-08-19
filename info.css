@@ -45,8 +45,8 @@
     border-bottom: 1px solid #444;
 }
 
-.btn-delete {
-    background-color: #f44336;
+.btn-view {
+    background-color: #2196F3;
     color: white;
     padding: 5px 10px;
     border: none;
@@ -54,6 +54,32 @@
     cursor: pointer;
 }
 
-.btn-delete:hover {
+.btn-view:hover {
     opacity: 0.8;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+    background: #222;
+    color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    line-height: 1.6;
+}
+
+.close-btn {
+    float: right;
+    font-size: 22px;
+    cursor: pointer;
 }

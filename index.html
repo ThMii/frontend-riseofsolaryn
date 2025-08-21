@@ -43,7 +43,7 @@
             <img src="Hình/Panel.png" alt="Banner" class="banner-image active" id="banner1">
             <img src="Hình/Test2.png" alt="Banner" class="banner-image" id="banner2">
             <img src="Hình/Test.png" alt="Banner" class="banner-image" id="banner3">
-            <img src="Hình/Test2.png" alt="Banner" class="banner-image" id="banner4">
+            <img src="Hình/panel2.jpg" alt="Banner" class="banner-image" id="banner4">
 
             <div class="info-panel">
                 <h2>Tham gia ngay</h2>
@@ -55,7 +55,7 @@
 
             <div class="thumbnail-nav">
                 <div class="thumbnail active" data-target="banner1">
-                    <img src="Hình/Test.png" alt="Banner 1">
+                    <img src="Hình/Panel.png" alt="Banner 1">
                 </div>
                 <div class="thumbnail" data-target="banner2">
                     <img src="Hình/Test2.png" alt="Banner 2">
@@ -64,7 +64,7 @@
                     <img src="Hình/Test.png" alt="Banner 3">
                 </div>
                 <div class="thumbnail" data-target="banner4">
-                    <img src="Hình/Test2.png" alt="Banner 4">
+                    <img src="Hình/panel2.jpg" alt="Banner 4">
                 </div>
             </div>
         </div>
@@ -101,32 +101,22 @@
     </section>
 
     <!-- Maps Section -->
-    <section class="marketplace-hero">
-        <h2 class="marketplace-title">Khám phá bản đồ</h2>
-        <div class="marketplace-grid">
-            <div class="marketplace-item">
-                <img src="Hình/Test.png" alt="Map1" class="marketplace-image">
-                <div class="marketplace-info">
-                    <h3>Bản đồ 1</h3>
-                    <p>Phần này để mô tả.</p>
-                </div>
-            </div>
-            <div class="marketplace-item">
-                <img src="Hình/Test.png" alt="Map2" class="marketplace-image">
-                <div class="marketplace-info">
-                    <h3>Bản đồ 2</h3>
-                    <p>Phần này để mô tả.</p>
-                </div>
-            </div>
-            <div class="marketplace-item">
-                <img src="Hình/Test.png" alt="Map3" class="marketplace-image">
-                <div class="marketplace-info">
-                    <h3>Bản đồ 3</h3>
-                    <p>Phần này để mô tả.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="map-section">
+    <div class="map-content">
+        <h2 class="map-title">BẢN ĐỒ CỦA BẠN</h2>
+        <p class="map-subtitle">CHIẾN ĐẤU KHẮP THẾ GIỚI</p>
+        <p class="map-desc">
+            Mỗi bản đồ đều là một sân chơi để bạn thỏa sức thể hiện tư duy sáng tạo của mình. 
+            Được xây dựng với mục đích phát triển chiến lược đội nhóm, các bản đồ Rise of Solaryn 
+            hứa hẹn mang đến cho người chơi những trận giao tranh ngoạn mục. 
+            Hãy là nguồn cảm hứng cho tất cả người chơi và tạo ra cho mình lối chơi độc nhất vô nhị.
+        </p>
+        <a href="map.html" class="map-button">KHÁM PHÁ CÁC BẢN ĐỒ</a>
+    </div>
+    <div class="map-image">
+        <img src="Hình/Test.png" alt="Map Preview">
+    </div>
+</section>
 
     <!-- News Section -->
     <section class="games">
@@ -238,7 +228,7 @@
         function updateAuthStatus() {
             const token = localStorage.getItem('authToken');
             const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-            
+
             const loginBtn = document.querySelector('.login-button');
             const logoutBtn = document.querySelector('.logout-button');
             const userInfo = document.querySelector('.user-info');
@@ -246,14 +236,14 @@
             if (token) {
                 loginBtn.style.display = 'none';
                 logoutBtn.style.display = 'block';
-                
+
                 if (userInfo) {
                     const avatar = userInfo.querySelector('.user-avatar');
                     const name = userInfo.querySelector('.user-name');
-                    
+
                     if (userData.avatarUrl) avatar.src = userData.avatarUrl;
                     if (userData.userName) name.textContent = userData.userName;
-                    
+
                     userInfo.style.display = 'flex';
                 }
             } else {
@@ -265,59 +255,79 @@
 
         // Initialize when DOM loaded
         document.addEventListener('DOMContentLoaded', () => {
-            updateAuthStatus();
-            
-            // Banner navigation
-            const thumbnails = document.querySelectorAll('.thumbnail');
             const banners = document.querySelectorAll('.banner-image');
-            
-            thumbnails.forEach(thumbnail => {
-                thumbnail.addEventListener('click', function() {
-                    thumbnails.forEach(t => t.classList.remove('active'));
-                    banners.forEach(b => b.classList.remove('active'));
-                    
-                    this.classList.add('active');
-                    document.getElementById(this.dataset.target).classList.add('active');
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            let currentIndex = 0;
+            let autoSlide;
+
+            // Hàm hiển thị banner
+            function showBanner(index) {
+                banners.forEach((banner, i) => {
+                    banner.classList.toggle('active', i === index);
+                    thumbnails[i].classList.toggle('active', i === index);
+                });
+                currentIndex = index;
+            }
+
+            // Tự động chuyển sau 5s
+            function startAutoSlide() {
+                autoSlide = setInterval(() => {
+                    let nextIndex = (currentIndex + 1) % banners.length;
+                    showBanner(nextIndex);
+                }, 5000); // 5000ms = 5s
+            }
+
+            // Cho phép click để chuyển thủ công
+            thumbnails.forEach((thumb, i) => {
+                thumb.addEventListener('click', () => {
+                    showBanner(i);
+                    clearInterval(autoSlide); // reset timer khi user click
+                    startAutoSlide();
                 });
             });
-            
-            // Video play button
-            const playBtn = document.querySelector('.play-button');
-            const video = document.querySelector('.video-container video');
-            
-            if (playBtn && video) {
-                playBtn.addEventListener('click', () => toggleVideoPlay());
-                video.addEventListener('click', () => toggleVideoPlay());
-                
-                function toggleVideoPlay() {
-                    if (video.paused) {
-                        video.play();
-                        playBtn.style.opacity = '0';
-                    } else {
-                        video.pause();
-                        playBtn.style.opacity = '1';
-                    }
+
+            // Khởi chạy
+            showBanner(0);
+            startAutoSlide();
+        });
+
+        // Video play button
+        const playBtn = document.querySelector('.play-button');
+        const video = document.querySelector('.video-container video');
+
+        if (playBtn && video) {
+            playBtn.addEventListener('click', () => toggleVideoPlay());
+            video.addEventListener('click', () => toggleVideoPlay());
+
+            function toggleVideoPlay() {
+                if (video.paused) {
+                    video.play();
+                    playBtn.style.opacity = '0';
+                } else {
+                    video.pause();
+                    playBtn.style.opacity = '1';
                 }
             }
-            
-            // Logout button
-            document.querySelector('.logout-button')?.addEventListener('click', () => {
-                localStorage.removeItem('authToken');
-                localStorage.removeItem('userData');
-                updateAuthStatus();
-                window.location.href = 'index.html';
-            });
+        }
 
-            // Login button
-            document.querySelector('.login-button')?.addEventListener('click', () => {
-                document.getElementById('auth-modal').style.display = 'flex';
-            });
+        // Logout button
+        document.querySelector('.logout-button')?.addEventListener('click', () => {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userData');
+            updateAuthStatus();
+            window.location.href = 'index.html';
+        });
 
-            // Close modal
-            document.querySelector('.close-modal')?.addEventListener('click', () => {
-                document.getElementById('auth-modal').style.display = 'none';
-            });
+        // Login button
+        document.querySelector('.login-button')?.addEventListener('click', () => {
+            document.getElementById('auth-modal').style.display = 'flex';
+        });
+
+        // Close modal
+        document.querySelector('.close-modal')?.addEventListener('click', () => {
+            document.getElementById('auth-modal').style.display = 'none';
         });
     </script>
 </body>
+
 </html>

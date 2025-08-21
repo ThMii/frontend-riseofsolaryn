@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Doanh thu | RiseOfSolarryn</title>
+  <link rel="stylesheet" href="revenue.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div id="loading">
+    <div class="spinner"></div>
+    <span>Đang tải dữ liệu...</span>
+  </div>
+
+  <header>
+    <div class="header-container">
+      <img src="Hình/logo.png" alt="Game Logo" class="logo">
+      <nav>
+        <ul>
+          <li><a href="admin.html">Giao dịch</a></li>
+          <li><a href="info.html">Người dùng</a></li>
+          <li><a href="revenue.html" class="active">Doanh thu</a></li>
+          <li><a href="#">Cài đặt</a></li>
+        </ul>
+      </nav>
+      <div class="auth-buttons">
+        <div class="user-menu">
+          <img src="Hình/avt.jpg" class="user-avatar" alt="User Avatar">
+          <span class="user-name"></span>
+          <button class="dropdown-toggle">▼</button>
+          <div class="dropdown-menu">
+            <a href="#" id="profile-btn">Thông tin cá nhân</a>
+            <a href="#" id="logout-btn">Đăng xuất</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-container">
+    <h1>Doanh thu từ giao dịch</h1>
+
+    <div class="revenue-summary">
+      <p>Tổng doanh thu: <span id="total-revenue">0</span> VNĐ</p>
+    </div>
+
+    <div class="chart-container">
+      <canvas id="revenueChart"></canvas>
+    </div>
+  </main>
+
+  <script src="auth.js"></script>
+  <script src="revenue.js"></script>
+</body>
+</html>

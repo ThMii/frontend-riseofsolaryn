@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi tiết Class</title>
+  <link rel="stylesheet" href="ros-classes.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <img src="Hình/logo.png" alt="Game Logo" class="logo">
+      <nav>
+        <ul>
+          <li><a href="game.html">Game</a></li>
+          <li><a href="payment.html">Nạp tiền</a></li>
+          <li><a href="classes.html" class="active">Class</a></li>
+          <li><a href="#">Hỗ trợ</a></li>
+        </ul>
+      </nav>
+      <div class="auth-buttons">
+        <button class="login-button">Đăng Nhập</button>
+        <button class="logout-button" style="display: none;">Đăng Xuất</button>
+        <div class="user-info" style="display: none;">
+          <span class="user-name"></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Class Detail -->
+  <section class="agent-hero">
+    <div class="agent-background"></div>
+    <div class="agent-background-image" id="class-bg"></div>
+
+    <div class="agent-content">
+      <p class="agent-role" id="class-role"></p>
+      <h1 class="agent-name" id="class-name"></h1>
+      <p class="agent-description" id="class-description"></p>
+    </div>
+  </section>
+
+  <!-- Abilities -->
+  <section class="abilities-section">
+    <div class="abilities-container" id="abilities-list">
+      <!-- sẽ được JS render -->
+    </div>
+  </section>
+
+  <!-- Video -->
+  <section class="video-section">
+    <div class="video-container">
+        <video id="class-video" controls poster="Hình/Panel.png">
+            <source id="video-source" src="" type="video/mp4">
+            Trình duyệt của bạn không hỗ trợ video.
+        </video>
+    </div>
+</section>
+
+  <!-- Navigation -->
+  <div class="agent-navigation">
+    <a href="classes.html" class="nav-button">← Quay lại</a>
+    <a href="index.html" class="nav-button">Trang chủ</a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">Rise of Solaryn</div>
+    <div class="footer-links">
+      <a href="#">Chính sách bảo mật</a>
+      <a href="#">Điều khoản dịch vụ</a>
+      <a href="#">Giới thiệu</a>
+      <a href="#">Liên hệ</a>
+    </div>
+    <p class="copyright">© 2025 Rise of Solaryn. Tất cả quyền được bảo lưu.</p>
+  </footer>
+
+  <script src="ros-classes.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Các Class - Rise of Solaryn</title>
+    <link rel="stylesheet" href="ros-classes.css">
+</head>
+
+<body>
+    <!-- Header -->
+  <header>
+    <div class="header-container">
+      <img src="Hình/logo.png" alt="Game Logo" class="logo">
+      <nav>
+        <ul>
+          <li><a href="game.html">Game</a></li>
+          <li><a href="payment.html">Nạp tiền</a></li>
+          <li><a href="#">Hỗ trợ</a></li>
+        </ul>
+      </nav>
+      <div class="auth-buttons">
+        <button class="login-button">Đăng Nhập</button>
+        <button class="logout-button" style="display: none;">Đăng Xuất</button>
+        <div class="user-info" style="display: none;">
+          <span class="user-name"></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Các lớp nhân vật</h1>
+            <p class="hero-subtitle">Khám phá ba lớp nhân vật độc đáo trong trò chơi, mỗi lớp có kỹ năng và phong cách
+                chiến đấu riêng biệt.</p>
+        </div>
+    </section>
+
+    <section class="agents-section">
+        <h2 class="section-title">Lựa chọn lớp nhân vật</h2>
+
+        <div class="agents-grid">
+            <!-- Hiệp Sĩ -->
+            <div class="agent-card" data-class="knight">
+                <img src="Hình/Knight.png"
+                    alt="Hiệp Sĩ" class="agent-image">
+                <div class="agent-overlay">
+                    <h3 class="agent-name">Hiệp Sĩ</h3>
+                    <p class="agent-role">Lớp cận chiến - phòng thủ</p>
+                    <a href="class-detail.html?class=knight" class="view-details">Xem chi tiết</a>
+                </div>
+            </div>
+
+            <!-- Cung Thủ -->
+            <div class="agent-card" data-class="archer">
+                <img src="Hình/Archer.png"
+                    alt="Cung Thủ" class="agent-image">
+                <div class="agent-overlay">
+                    <h3 class="agent-name">Cung Thủ</h3>
+                    <p class="agent-role">Lớp tấn công từ xa - sát thương</p>
+                    <a href="class-detail.html?class=archer" class="view-details">Xem chi tiết</a>
+                </div>
+            </div>
+
+            <!-- Pháp Sư -->
+            <div class="agent-card" data-class="mage">
+                <img src="Hình/Magic.png"
+                    alt="Pháp Sư" class="agent-image">
+                <div class="agent-overlay">
+                    <h3 class="agent-name">Pháp Sư</h3>
+                    <p class="agent-role">Lớp phép thuật - hỗ trợ</p>
+                    <a href="class-detail.html?class=mage" class="view-details">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">Game Of Warriors</div>
+        <div class="footer-links">
+            <a href="#">Chính sách bảo mật</a>
+            <a href="#">Điều khoản dịch vụ</a>
+            <a href="#">Giới thiệu</a>
+            <a href="#">Liên hệ</a>
+        </div>
+        <p class="copyright">© 2023 Game Of Warriors. Tất cả quyền được bảo lưu.</p>
+    </footer>
+
+    <script src="ros-classes.js"></script>
+</body>
+
+</html>

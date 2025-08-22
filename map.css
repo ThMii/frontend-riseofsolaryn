@@ -1,13 +1,15 @@
+/* map.css */
+
+/* ===== Reset & Body ===== */
 body {
     font-family: Arial, sans-serif;
-    background-color: #ebebeb;
-    /* đồng bộ nền */
+    background-color: #ebebeb; /* đồng bộ nền */
     margin: 0;
     padding: 0;
     color: #111;
 }
 
-/* Header */
+/* ===== Header ===== */
 header {
     background-color: #000000;
     padding: 15px 0;
@@ -103,6 +105,7 @@ nav ul li a:hover {
     font-weight: bold;
 }
 
+/* ===== Map Content ===== */
 .map-header {
     text-align: center;
     padding: 50px 20px 20px;
@@ -168,64 +171,7 @@ nav ul li a:hover {
     border: 3px solid red;
 }
 
-/* Footer */
-footer {
-    background-color: #222;
-    padding: 40px 20px;
-}
-
-.footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
-}
-
-.footer-column h3 {
-    color: #fff;
-    margin-bottom: 20px;
-    font-size: 18px;
-}
-
-.footer-column ul {
-    list-style: none;
-}
-
-.footer-column ul li {
-    margin-bottom: 10px;
-}
-
-.footer-column ul li a {
-    color: #aaa;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.footer-column ul li a:hover {
-    color: #fff;
-}
-
-.social-icons {
-    display: flex;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.social-icons a {
-    color: #aaa;
-    font-size: 20px;
-}
-
-.copyright {
-    text-align: center;
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid #444;
-    color: #777;
-    font-size: 14px;
-}
-
+/* ===== Modal (đồng bộ với index.html) ===== */
 .modal {
     position: fixed;
     top: 0;
@@ -296,15 +242,20 @@ footer {
     cursor: pointer;
 }
 
-.switch-form {
-    margin-top: 15px;
-    color: #aaa;
-    text-align: center;
-}
-
-.switch-form a {
-    color: #e10600;
-    text-decoration: none;
+/* ===== Loading Spinner ===== */
+#loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    z-index: 10000;
 }
 
 .spinner {
@@ -318,7 +269,63 @@ footer {
 }
 
 @keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+    to { transform: rotate(360deg); }
+}
+
+/* ===== Footer ===== */
+footer {
+    background-color: #222;
+    padding: 40px 20px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+}
+
+.footer-column h3 {
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-column ul li a:hover {
+    color: #fff;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-icons a {
+    color: #aaa;
+    font-size: 20px;
+}
+
+.copyright {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+    color: #777;
+    font-size: 14px;
 }

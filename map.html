@@ -66,59 +66,90 @@
     </div>
   </section>
 
+  <!-- Footer -->
   <footer>
     <div class="footer-container">
-      <div class="footer-column">
-        <h3>Games</h3>
-        <ul>
-          <li><a href="#">Rise of Solarryn</a></li>
-          <li><a href="#">RoS Dungeons</a></li>
-          <li><a href="#">RoS Legends</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Community</h3>
-        <ul>
-          <li><a href="#">Forums</a></li>
-          <li><a href="#">Feedback</a></li>
-          <li><a href="#">Events</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Support</h3>
-        <ul>
-          <li><a href="#">Help Center</a></li>
-          <li><a href="#">Contact Us</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Follow Us</h3>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-facebook"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
+        <div class="footer-column">
+            <h3>Games</h3>
+            <ul>
+                <li><a href="#">Rise of Solarryn</a></li>
+                <li><a href="#">RoS Dungeons</a></li>
+                <li><a href="#">RoS Legends</a></li>
+            </ul>
         </div>
-      </div>
+        <div class="footer-column">
+            <h3>Community</h3>
+            <ul>
+                <li><a href="#">Forums</a></li>
+                <li><a href="#">Feedback</a></li>
+                <li><a href="#">Events</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Support</h3>
+            <ul>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
     </div>
     <div class="copyright">
-      <p>© 2025 6 anh em siêu nhân Studios. Rise of Solarryn.</p>
+        <p>© 2025 6 anh em siêu nhân Studios. Rise of Solarryn.</p>
     </div>
-  </footer>
+</footer>
 
   <script>
     function changeMapImage(element, mainId) {
       const mainImage = document.getElementById(mainId);
       const thumbnails = element.parentElement.querySelectorAll("img");
-  
+
       // luôn đổi ảnh, kể cả khi src trùng nhau
       mainImage.src = element.src;
-  
+
       // reset active
       thumbnails.forEach(img => img.classList.remove("active"));
       element.classList.add("active");
     }
   </script>
+  <!-- Auth Modal -->
+  <div id="auth-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div id="login-form">
+            <h3>Đăng Nhập</h3>
+            <input type="text" id="login-username" placeholder="Tên đăng nhập" required>
+            <input type="password" id="login-password" placeholder="Mật khẩu" required>
+            <button id="login-btn" class="btn-login">Đăng Nhập</button>
+            <p class="switch-form">Chưa có tài khoản? <a href="#" id="show-register">Đăng ký ngay</a></p>
+        </div>
+        <div id="register-form" style="display: none;">
+            <h3>Đăng Ký</h3>
+            <input type="text" id="register-username" placeholder="Tên đăng nhập" required>
+            <input type="email" id="register-email" placeholder="Email" required>
+            <input type="password" id="register-password" placeholder="Mật khẩu" required>
+            <button id="register-btn" class="btn-register">Đăng Ký</button>
+            <p class="switch-form">Đã có tài khoản? <a href="#" id="show-login">Đăng nhập</a></p>
+        </div>
+        <div id="otp-form" style="display: none;">
+            <h3>Xác Thực OTP</h3>
+            <p>Mã OTP đã được gửi đến email của bạn</p>
+            <input type="text" id="otp-code" placeholder="Nhập mã OTP" required>
+            <button id="verify-otp-btn" class="btn-verify">Xác Nhận</button>
+        </div>
+    </div>
+</div>
+
+  <!-- Script auth -->
+  <script src="auth.js"></script>
 </body>
 
 </html>

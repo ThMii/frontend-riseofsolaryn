@@ -119,7 +119,7 @@ function showUserDetail(userId, users) {
     document.getElementById('modal-username').textContent = user.userName;
     document.getElementById('modal-role').textContent = user.role;
     document.getElementById('modal-created').textContent = new Date(user.createdAt).toLocaleString('vi-VN');
-    document.getElementById('modal-diamonds').textContent = user.diamonds || 0;
+    document.getElementById('modal-diamonds').textContent = user.coins || 0;
     document.getElementById('modal-character').textContent = user.characters?.[0]?.className || 'Chưa có';
 
     document.getElementById('user-modal').style.display = 'block';

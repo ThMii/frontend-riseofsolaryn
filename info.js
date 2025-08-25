@@ -98,7 +98,7 @@ function renderUsers(users) {
             <td>${user.email}</td>
             <td>${user.role}</td>
             <td>${new Date(user.createdAt).toLocaleString('vi-VN')}</td>
-            <td>${user.lastLogin ? new Date(user.lastLogin).toLocaleString('vi-VN') : 'Chưa đăng nhập'}</td>
+
             <td><button class="btn-view" data-id="${user.userId}">Xem</button></td>
         `;
         tbody.appendChild(tr);

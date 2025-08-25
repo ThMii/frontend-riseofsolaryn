@@ -106,11 +106,10 @@ nav ul li a:hover {
     font-weight: bold;
 }
 
-/* ... (tiếp tục với các phần CSS còn lại từ file index.html) ... */
 .interactive-banner {
     position: relative;
     height: 600px;
-    margin-bottom: 60px;
+    margin-bottom: 0px;
     overflow: hidden;
 }
 
@@ -148,6 +147,7 @@ nav ul li a:hover {
     padding: 30px;
     border-radius: 8px;
     z-index: 2;
+    text-align: center; 
 }
 
 .info-panel h2 {
@@ -161,9 +161,14 @@ nav ul li a:hover {
     margin-bottom: 15px;
     line-height: 1.5;
 }
+p strong {
+    font-size: 22px; /* chỉnh to/nhỏ tùy thích */
+
+  }
 
 .action-buttons {
     display: flex;
+    justify-content: center;
     gap: 15px;
     margin-top: 20px;
 }
@@ -283,6 +288,7 @@ nav ul li a:hover {
 }
 
 .ros-content p {
+    text-align: justify;
     font-size: 18px;
     line-height: 1.6;
     margin-bottom: 30px;
@@ -426,10 +432,11 @@ nav ul li a:hover {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 15px;
-    color: #333;
+    color: #ffeded;
 }
 
 .map-desc {
+    text-align: justify;
     font-size: 16px;
     line-height: 1.6;
     margin-bottom: 30px;
@@ -454,6 +461,8 @@ nav ul li a:hover {
 .map-image {
     flex: 1;
     text-align: right;
+    margin-left: 40px; /* 👈 đẩy ảnh cách chữ ra 40px */
+    border-radius: 12px;
 }
 
 .map-image img {
@@ -527,40 +536,41 @@ nav ul li a:hover {
 
 /* Footer */
 footer {
-    background-color: #222;
-    padding: 40px 20px;
+    background-color: #000000;
+    padding: 40px;
+    text-align: center;
+    margin-top: 80px;
 }
 
-.footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
-}
-
-.footer-column h3 {
-    color: #fff;
+.footer-logo {
+    font-size: 24px;
+    color: red;
     margin-bottom: 20px;
-    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
-.footer-column ul {
-    list-style: none;
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
-.footer-column ul li {
-    margin-bottom: 10px;
-}
-
-.footer-column ul li a {
-    color: #aaa;
+.footer-links a {
+    color: var(--primary-light);
     text-decoration: none;
-    font-size: 14px;
+    transition: color 0.3s;
 }
 
-.footer-column ul li a:hover {
-    color: #fff;
+.footer-links a:hover {
+    color: var(--primary-red);
+}
+
+.copyright {
+    color: #768079;
+    font-size: 14px;
 }
 
 .social-icons {

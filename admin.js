@@ -137,7 +137,7 @@ function renderTransactions(transactions) {
         
         tr.innerHTML = `
             <td>${transaction.transactionId}</td>
-            <td>${transaction.user?.email || transaction.user?.userName || 'N/A'}</td>
+            <td>${transaction.userName || transaction.userEmail || 'N/A'}</td>
             <td>${transaction.amount?.toLocaleString('vi-VN') || '0'} VND</td>
             <td>${transaction.paymentMethod || 'BANK_TRANSFER'}</td>
             <td>

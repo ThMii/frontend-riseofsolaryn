@@ -14,16 +14,18 @@
             <img src="Hình/logo.png" alt="Game Logo" class="logo">
             <nav>
                 <ul>
-                    <li><a href="index.html">Trang chủ</a></li>
                     <li><a href="game.html">Game</a></li>
                     <li><a href="payment.html" class="active">Nạp tiền</a></li>
+                    <li><a href="classes.html">Nhân vật</a></li>
                 </ul>
             </nav>
             <div class="auth-buttons">
-                <button class="logout-button">Đăng Xuất</button>
-                <div class="user-info">
-                    <img src="" class="user-avatar" alt="User Avatar">
-                    <span class="user-name"></span>
+                <div class="user-menu">
+                    <span class="user-name">Hi, User</span>
+                    <button class="dropdown-toggle">▼</button>
+                    <div class="dropdown-menu">
+                        <a href="#" id="logout-btn">Đăng xuất</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,7 +37,7 @@
             <h2>Chọn phương thức nạp tiền</h2>
             <div class="payment-methods">
                 <div class="method-card" data-method="bank">
-                    <img src="Hình/bank-icon.png" alt="Ngân hàng">
+                    <img src="Hình/vcb.png" alt="Ngân hàng">
                     <h3>Ngân hàng</h3>
                     <p>Nạp qua chuyển khoản ngân hàng</p>
                 </div>
@@ -67,10 +69,10 @@
                 <div class="bank-info">
                     <h3>Thông tin chuyển khoản</h3>
                     <p><strong>Ngân hàng:</strong> VietcomBank</p>
-                    <p><strong>Số tài khoản:</strong> 123456</p>
+                    <p><strong>Số tài khoản:</strong> 1039412076</p>
                     <p><strong>Tên tài khoản:</strong> TRAN BAO THONG</p>
                     <p><strong>Số tiền:</strong> <span id="payment-amount">0</span> VND</p>
-                    <p><strong>Nội dung:</strong> <span id="payment-code">Tên người chơi_Số tiền</span></p>
+                    <p><strong>Nội dung chuyển khoản:</strong> <span id="payment-code">Tên người chơi_Số tiền</span></p>
                 </div>
                 <div class="qr-code">
                     <h3>Quét mã QR để thanh toán</h3>
@@ -81,6 +83,7 @@
                 <h3>Hướng dẫn thanh toán</h3>
                 <ol>
                     <li>Chuyển khoản chính xác số tiền và nội dung như trên</li>
+                    <li>Tên người chơi_Số tiền_Nội dung chuyển khoản</li>
                     <li>Hệ thống sẽ tự động xử lý trong 5-10 phút</li>
                     <li>Nếu có lỗi, vui lòng liên hệ hỗ trợ</li>
                 </ol>
@@ -95,125 +98,8 @@
             </div>
         </section>
     </main>
-
     <script src="auth.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Kiểm tra đăng nhập
-            const token = localStorage.getItem('authToken');
-            if (!token) {
-                alert('Vui lòng đăng nhập để nạp tiền');
-                window.location.href = 'index.html';
-                return;
-            }
-
-            // Hiển thị thông tin user
-            const userData = JSON.parse(localStorage.getItem('userData')) || {};
-            if (userData.avatarUrl) document.querySelector('.user-avatar').src = userData.avatarUrl;
-            if (userData.userName) document.querySelector('.user-name').textContent = userData.userName;
-
-            // Xử lý logout
-            document.querySelector('.logout-button').addEventListener('click', () => {
-                localStorage.removeItem('authToken');
-                localStorage.removeItem('userData');
-                window.location.href = 'index.html';
-            });
-
-            // Logic chuyển bước
-            let currentStep = 1;
-            let selectedMethod = '';
-            let selectedAmount = 0;
-            const paymentCode = 'ROS' + Math.floor(100000 + Math.random() * 900000);
-
-            // Hiển thị mã thanh toán
-            document.getElementById('payment-code').textContent = paymentCode;
-
-            // Chọn phương thức
-            document.querySelectorAll('.method-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    selectedMethod = card.dataset.method;
-                    nextStep();
-                });
-            });
-
-            // Chọn mệnh giá
-            document.querySelectorAll('.amount-option').forEach(option => {
-                option.addEventListener('click', function () {
-                    document.querySelectorAll('.amount-option').forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-                    this.classList.add('selected');
-                    selectedAmount = parseInt(this.dataset.amount);
-                    document.getElementById('payment-amount').textContent = selectedAmount.toLocaleString();
-                });
-            });
-
-            // Nút điều hướng
-            document.querySelectorAll('.btn-next').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (currentStep === 2 && selectedAmount === 0) {
-                        alert('Vui lòng chọn mệnh giá');
-                        return;
-                    }
-                    nextStep();
-                });
-            });
-
-            document.querySelectorAll('.btn-prev').forEach(btn => {
-                btn.addEventListener('click', prevStep);
-            });
-
-            document.querySelector('.btn-complete').addEventListener('click', async () => {
-                if (selectedAmount === 0) {
-                    alert('Vui lòng chọn mệnh giá');
-                    return;
-                }
-
-                showLoading(true);
-
-                try {
-                    // Gọi API tạo giao dịch
-                    const response = await fetch(`${API_BASE_URL}/transactions`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-                        },
-                        body: JSON.stringify({
-                            amount: selectedAmount,
-                            paymentCode: paymentCode
-                        })
-                    });
-
-                    const data = await response.json();
-                    console.log("API Response:", data);
-                    if (!response.ok) {
-                        throw new Error(data.message || 'Tạo giao dịch thất bại');
-                    }
-
-                    alert(`Giao dịch #${data.transactionId} đã được tạo. Vui lòng chuyển khoản theo hướng dẫn.`);
-                    window.location.href = 'game.html';
-                } catch (error) {
-                    console.error('Error creating transaction:', error);
-                    alert('Có lỗi xảy ra: ' + error.message);
-                } finally {
-                    showLoading(false);
-                }
-            });
-
-            function nextStep() {
-                document.getElementById(`step${currentStep}`).classList.remove('active');
-                currentStep++;
-                document.getElementById(`step${currentStep}`).classList.add('active');
-            }
-
-            function prevStep() {
-                document.getElementById(`step${currentStep}`).classList.remove('active');
-                currentStep--;
-                document.getElementById(`step${currentStep}`).classList.add('active');
-            }
-        });
-    </script>
+    <script src="payment.js"></script>
 </body>
 
 </html>

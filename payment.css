@@ -11,90 +11,89 @@ body {
 }
 
 header {
-    background-color: #000000;
-    padding: 15px 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    background: #000;
+    padding: 10px 20px;
 }
 
 .header-container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+    justify-content: space-between;
     position: relative;
 }
 
 .logo {
-    height: 40px;
+    height: 50px;
 }
 
-nav {
+header nav {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
 }
-
 nav ul {
-    display: flex;
     list-style: none;
+    display: flex;
+    gap: 50px;
 }
 
-nav ul li {
-    margin: 0 12px;
-}
-
-nav ul li a {
+nav a {
     color: white;
     text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-    transition: opacity 0.3s;
-}
-
-nav ul li a:hover {
-    opacity: 0.8;
-}
-
-.auth-buttons {
-    margin-left: auto;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.user-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.user-name {
-    color: white;
-    font-size: 14px;
-}
-
-.login-button,
-.logout-button {
-    background-color: #e10600;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
     font-weight: bold;
 }
 
-.logout-button {
-    background-color: #333;
+nav a.active {
+    color: #ffaa00;
+}
+
+.user-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.user-name {
+    color: #ffaa00;
+}
+
+.dropdown-toggle {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: #222;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    display: none;
+    flex-direction: column;
+    min-width: 150px;
+    z-index: 10;
+}
+
+.dropdown-menu a {
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+    background: #333;
+}
+
+.user-menu.active .dropdown-menu {
+    display: flex;
 }
 /* Payment Page Styles */
 .payment-container {

@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
       name: "Hiệp Sĩ",
       role: "Cận chiến - Phòng thủ",
       description: "Hiệp sĩ là bức tường vững chắc, chuyên về phòng thủ và sát thương cận chiến.",
-      bg: "Hình/Knight.png",
+      bg: "Hình/Logo1 (4).jpg",
       abilities: [
         { name: "Xoay kiếm", desc: "Xoay kiếm vòng tròn gây sát thương." },
         { name: "Khiên chắn", desc: "Tạo lá chắn chặn sát thương từ kẻ địch." },
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
       name: "Cung Thủ",
       role: "Tấn công từ xa - Sát thương",
       description: "Cung thủ có tốc độ cao, gây sát thương lớn từ khoảng cách an toàn.",
-      bg: "Hình/Archer.png",
+      bg: "Hình/Logo1 (3).jpg",
       abilities: [
         { name: "Tán xạ tiễn", desc: "Bắn ra 3 mũi tên theo hình nón." },
         { name: "Tăng tốc", desc: "Xạ Thủ tăng tốc độ bắn và tốc độ chạy trong 5 giây." },
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
       name: "Pháp Sư",
       role: "Phép thuật - Chiêu hồn sư",
       description: "Pháp sư tinh thông phép thuật, chiều hồi các ma xương tiêu diệt kẻ địch.",
-      bg: "Hình/Magic.png",
+      bg: "Hình/Logo1 (2).jpg",
       abilities: [
         { name: "Triệu hồi", desc: "Triệu hồi 3 đệ (tối đa 9 đệ cùng tồn tại)." },
         { name: "Hồi phục", desc: "Hồi máu cho đệ." },

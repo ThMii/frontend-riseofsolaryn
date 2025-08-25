@@ -15,9 +15,9 @@
       <img src="Hình/logo.png" alt="Game Logo" class="logo">
       <nav>
         <ul>
-          <li><a href="game.html">Game</a></li>
+          <li><a href="index.html">Game</a></li>
           <li><a href="payment.html">Nạp tiền</a></li>
-          <li><a href="#">Hỗ trợ</a></li>
+          <li><a href="classes.html">Nhân vật</a></li>
         </ul>
       </nav>
       <div class="auth-buttons">
@@ -46,7 +46,7 @@
         <div class="agents-grid">
             <!-- Hiệp Sĩ -->
             <div class="agent-card" data-class="knight">
-                <img src="Hình/Knight.png"
+                <img src="Hình/Logo1 (4).jpg"
                     alt="Hiệp Sĩ" class="agent-image">
                 <div class="agent-overlay">
                     <h3 class="agent-name">Hiệp Sĩ</h3>
@@ -57,7 +57,7 @@
 
             <!-- Cung Thủ -->
             <div class="agent-card" data-class="archer">
-                <img src="Hình/Archer.png"
+                <img src="Hình/Logo1 (3).jpg"
                     alt="Cung Thủ" class="agent-image">
                 <div class="agent-overlay">
                     <h3 class="agent-name">Cung Thủ</h3>
@@ -68,7 +68,7 @@
 
             <!-- Pháp Sư -->
             <div class="agent-card" data-class="mage">
-                <img src="Hình/Magic.png"
+                <img src="Hình/Logo1 (2).jpg"
                     alt="Pháp Sư" class="agent-image">
                 <div class="agent-overlay">
                     <h3 class="agent-name">Pháp Sư</h3>
@@ -80,15 +80,58 @@
     </section>
 
     <footer>
-        <div class="footer-logo">Game Of Warriors</div>
+        <div class="footer-logo">Rise of Solaryn</div>
         <div class="footer-links">
             <a href="#">Chính sách bảo mật</a>
             <a href="#">Điều khoản dịch vụ</a>
             <a href="#">Giới thiệu</a>
             <a href="#">Liên hệ</a>
         </div>
-        <p class="copyright">© 2023 Game Of Warriors. Tất cả quyền được bảo lưu.</p>
+        <p class="copyright">© 2025 Rise of Solaryn. 6 anh em siêu nhân.</p>
     </footer>
+    <script>
+        function changeMapImage(element, mainId) {
+          const mainImage = document.getElementById(mainId);
+          const thumbnails = element.parentElement.querySelectorAll("img");
+    
+          // luôn đổi ảnh, kể cả khi src trùng nhau
+          mainImage.src = element.src;
+    
+          // reset active
+          thumbnails.forEach(img => img.classList.remove("active"));
+          element.classList.add("active");
+        }
+      </script>
+      <!-- Auth Modal -->
+      <div id="auth-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="login-form">
+                <h3>Đăng Nhập</h3>
+                <input type="text" id="login-username" placeholder="Tên đăng nhập" required>
+                <input type="password" id="login-password" placeholder="Mật khẩu" required>
+                <button id="login-btn" class="btn-login">Đăng Nhập</button>
+                <p class="switch-form">Chưa có tài khoản? <a href="#" id="show-register">Đăng ký ngay</a></p>
+            </div>
+            <div id="register-form" style="display: none;">
+                <h3>Đăng Ký</h3>
+                <input type="text" id="register-username" placeholder="Tên đăng nhập" required>
+                <input type="email" id="register-email" placeholder="Email" required>
+                <input type="password" id="register-password" placeholder="Mật khẩu" required>
+                <button id="register-btn" class="btn-register">Đăng Ký</button>
+                <p class="switch-form">Đã có tài khoản? <a href="#" id="show-login">Đăng nhập</a></p>
+            </div>
+            <div id="otp-form" style="display: none;">
+                <h3>Xác Thực OTP</h3>
+                <p>Mã OTP đã được gửi đến email của bạn</p>
+                <input type="text" id="otp-code" placeholder="Nhập mã OTP" required>
+                <button id="verify-otp-btn" class="btn-verify">Xác Nhận</button>
+            </div>
+        </div>
+    </div>
+    
+      <!-- Script auth -->
+      <script src="auth.js"></script>
 
     <script src="ros-classes.js"></script>
     <script src="auth.js"></script>

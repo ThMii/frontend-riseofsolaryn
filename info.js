@@ -136,3 +136,27 @@ function logout() {
     localStorage.removeItem('userData');
     window.location.href = 'index.html';
 }
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('user-modal');
+    const closeBtn = modal.querySelector('.close-btn');
+  
+    // Đóng khi bấm nút X
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+  
+    // Đóng khi bấm ra ngoài nội dung modal
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  
+    // Đóng khi bấm phím Esc
+    document.addEventListener('keydown', (e) => {
+      if (e.key === "Escape") {
+        modal.style.display = 'none';
+      }
+    });
+  });
+  

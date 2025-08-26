@@ -447,7 +447,7 @@ p strong {
 .map-button {
     display: inline-block;
     padding: 12px 24px;
-    background: #ff4655;
+    background: #ffaa00;
     color: #fff;
     text-decoration: none;
     font-weight: bold;
@@ -456,7 +456,7 @@ p strong {
 }
 
 .map-button:hover {
-    background: #e63e4c;
+    background: #ffaa00;
 }
 
 .map-image {

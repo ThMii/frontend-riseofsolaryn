@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const classVideos = {
         knight: "Hình/0822.mp4",
         archer: "Hình/Archer.mp4",
-        mage: "Hình/mage.mp4"
+        mage: "Hình/magic.mp4"
     };
 
     if (selectedClass && classVideos[selectedClass]) {

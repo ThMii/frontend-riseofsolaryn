@@ -413,7 +413,8 @@ p strong {
     justify-content: space-between;
     align-items: center;
     padding: 60px 10%;
-    background-color: #313131;;
+    background-color: #1a1a1a; 
+    color: #fff;
 }
 
 .map-content {
@@ -475,6 +476,8 @@ p strong {
     padding: 60px 20px;
     max-width: 1200px;
     margin: 0 auto;
+    color: #111;
+    border-radius: 8px; 
 }
 
 .section-title {

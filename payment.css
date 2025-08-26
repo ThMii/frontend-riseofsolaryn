@@ -1,3 +1,4 @@
+/* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -5,11 +6,16 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body {
+/* Layout cơ bản */
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     background-color: #313131;
     color: white;
 }
 
+/* Header */
 header {
     background: #000;
     padding: 10px 20px;
@@ -31,6 +37,7 @@ header nav {
     left: 50%;
     transform: translateX(-50%);
 }
+
 nav ul {
     list-style: none;
     display: flex;
@@ -47,6 +54,7 @@ nav a.active {
     color: #ffaa00;
 }
 
+/* User Menu */
 .user-menu {
     position: relative;
     display: flex;
@@ -95,8 +103,10 @@ nav a.active {
 .user-menu.active .dropdown-menu {
     display: flex;
 }
+
 /* Payment Page Styles */
-.payment-container {
+main.payment-container {
+    flex: 1;
     max-width: 1200px;
     margin: 30px auto;
     padding: 20px;
@@ -153,13 +163,30 @@ nav a.active {
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s;
+    position: relative;
 }
 
-.amount-option:hover, .amount-option.selected {
+.amount-option:hover,
+.amount-option.selected {
     background-color: #ffaa00;
     color: #2d2d2d;
     font-weight: bold;
 }
+
+/* Thêm icon coin hoặc chest */
+.amount-option::after {
+    content: "";
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background-size: cover;
+}
+
+.coin-1::after { background-image: url("Hình/chest.png"); }
+.coin-5::after { background-image: url("icons/coin-stack.png"); width: 32px; height: 32px; }
+.coin-chest::after { background-image: url("icons/chest.png"); width: 40px; height: 40px; }
 
 .payment-details {
     display: grid;
@@ -228,7 +255,8 @@ nav a.active {
     color: white;
 }
 
-.btn-next, .btn-complete {
+.btn-next,
+.btn-complete {
     background-color: #ffaa00;
     color: #2d2d2d;
 }
@@ -238,3 +266,44 @@ nav a.active {
     to { opacity: 1; }
 }
 
+/* Footer */
+footer {
+    background-color: #000000;
+    padding: 40px;
+    text-align: center;
+    margin-top: auto;
+}
+
+.footer-logo {
+    font-size: 24px;
+    color: #ffaa00;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #aaa;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #ffaa00;
+}
+
+.copyright {
+    color: #777;
+    font-size: 14px;
+    margin-top: 20px;
+    border-top: 1px solid #444;
+    padding-top: 10px;
+}

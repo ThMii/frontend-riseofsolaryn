@@ -135,7 +135,8 @@ nav a.active {
 /* Hero Section */
 .hero {
     position: relative;
-    height: 100vh;
+    flex: 1; /* để hero chiếm không gian còn lại */
+    min-height: 90vh; /* dài hơn chiều cao màn hình */
     background: url('images/game-bg.jpg') center/cover no-repeat;
     display: flex;
     align-items: center;
@@ -335,4 +336,21 @@ footer {
 
 @keyframes spin {
     to { transform: rotate(360deg); }
+}
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    margin: 0;
+}
+
+main, .hero {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto; 
 }
